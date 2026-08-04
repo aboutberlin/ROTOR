@@ -12,6 +12,8 @@ AK10-9 — and a Mac, this replaces the Windows-only vendor upper-computer softw
 for everyday work: reading and writing motor parameters, live telemetry, servo
 control, FOC parameter detection, CAN status configuration and firmware upgrade.
 
+![Live telemetry and servo control](docs/images/live-control.png)
+
 > ### ⚠️ Bolt the motor down before you connect
 >
 > This software energises motors and makes them **rotate suddenly, under power,
@@ -80,6 +82,22 @@ parameter *layout* matching is not the same claim as the parameter *ranges* bein
 right for that model — pole count, gear ratio and current limits have to come
 from a datasheet, not from a signature match. Connecting an unlisted actuator is
 safe and shows you exactly what the tool could and could not determine about it.
+
+![An unrecognised actuator connects read-only](docs/images/read-only-new-motor.png)
+
+The device page separates what was *confirmed* from what was *inferred*, which is
+what makes the read-only state explainable rather than mysterious: below, the
+parameter table is confirmed — the layout signature matches, so every value is
+decoded at the offset it was written to — while the profile itself is only
+inferred from the protocol family, so writing stays disabled.
+
+![Device page: what the tool knows, guessed, and still needs](docs/images/device-page.png)
+
+![Four different actuators, one adapter, one build](docs/images/four-actuators.png)
+
+*Four actuators across both firmware generations, read through the same adapter
+and the same build. The header line reports what each one actually said during
+the handshake — hardware string, firmware version and protocol branch.*
 
 Adding an actuator is a registry entry, not a code change. Pull requests welcome
 if you have hardware to test against.
