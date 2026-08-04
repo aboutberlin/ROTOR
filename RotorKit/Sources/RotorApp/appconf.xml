@@ -1,0 +1,2347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConfigParams>
+    <Params>
+        <controller_id>
+            <longName>VESC ID</longName>
+            <type>2</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_CONTROLLER_ID</cDefine>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxInt>255</maxInt>
+            <minInt>0</minInt>
+            <showDisplay>0</showDisplay>
+            <stepInt>1</stepInt>
+            <valInt>0</valInt>
+            <suffix></suffix>
+            <vTx>1</vTx>
+        </controller_id>
+        <timeout_msec>
+            <longName>Timeout</longName>
+            <type>2</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_TIMEOUT_MSEC</cDefine>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxInt>30000000</maxInt>
+            <minInt>0</minInt>
+            <showDisplay>0</showDisplay>
+            <stepInt>1</stepInt>
+            <valInt>1000</valInt>
+            <suffix> ms</suffix>
+            <vTx>5</vTx>
+        </timeout_msec>
+        <timeout_brake_current>
+            <longName>Timeout Brake Current</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_TIMEOUT_BRAKE_CURRENT</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>500</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>1</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> A</suffix>
+            <vTx>9</vTx>
+        </timeout_brake_current>
+        <send_can_status>
+            <longName>Can Status Message Mode</longName>
+            <type>4</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_SEND_CAN_STATUS</cDefine>
+            <valInt>0</valInt>
+            <enumNames>CAN_STATUS_DISABLED</enumNames>
+            <enumNames>CAN_STATUS_1</enumNames>
+            <enumNames>CAN_STATUS_1_2</enumNames>
+            <enumNames>CAN_STATUS_1_2_3</enumNames>
+            <enumNames>CAN_STATUS_1_2_3_4</enumNames>
+            <enumNames>CAN_STATUS_1_2_3_4_5</enumNames>
+        </send_can_status>
+        <send_can_status_rate_hz>
+            <longName>Can Status Rate</longName>
+            <type>2</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_SEND_CAN_STATUS_RATE_HZ</cDefine>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxInt>10000</maxInt>
+            <minInt>0</minInt>
+            <showDisplay>0</showDisplay>
+            <stepInt>1</stepInt>
+            <valInt>500</valInt>
+            <suffix> Hz</suffix>
+            <vTx>3</vTx>
+        </send_can_status_rate_hz>
+        <can_baud_rate>
+            <longName>CAN Baud Rate</longName>
+            <type>4</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_CAN_BAUD_RATE</cDefine>
+            <valInt>2</valInt>
+            <enumNames>CAN_BAUD_125K</enumNames>
+            <enumNames>CAN_BAUD_250K</enumNames>
+            <enumNames>CAN_BAUD_500K</enumNames>
+            <enumNames>CAN_BAUD_1M</enumNames>
+            <enumNames>CAN_BAUD_10K</enumNames>
+            <enumNames>CAN_BAUD_20K</enumNames>
+            <enumNames>CAN_BAUD_50K</enumNames>
+            <enumNames>CAN_BAUD_75K</enumNames>
+        </can_baud_rate>
+        <pairing_done>
+            <longName>Pairing Done</longName>
+            <type>5</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_PAIRING_DONE</cDefine>
+            <valInt>0</valInt>
+        </pairing_done>
+        <permanent_uart_enabled>
+            <longName>Enable Permanent UART</longName>
+            <type>5</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_PERMANENT_UART_ENABLED</cDefine>
+            <valInt>1</valInt>
+        </permanent_uart_enabled>
+        <shutdown_mode>
+            <longName>Shutdown Mode</longName>
+            <type>4</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_SHUTDOWN_MODE</cDefine>
+            <valInt>7</valInt>
+            <enumNames>ALWAYS_OFF</enumNames>
+            <enumNames>ALWAYS_ON</enumNames>
+            <enumNames>TOGGLE_BUTTON_ONLY</enumNames>
+            <enumNames>OFF_AFTER_10S</enumNames>
+            <enumNames>OFF_AFTER_1M</enumNames>
+            <enumNames>OFF_AFTER_5M</enumNames>
+            <enumNames>OFF_AFTER_10M</enumNames>
+            <enumNames>OFF_AFTER_30M</enumNames>
+            <enumNames>OFF_AFTER_1H</enumNames>
+            <enumNames>OFF_AFTER_5H</enumNames>
+        </shutdown_mode>
+        <can_mode>
+            <longName>CAN Mode</longName>
+            <type>4</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_CAN_MODE</cDefine>
+            <valInt>0</valInt>
+            <enumNames>VESC</enumNames>
+            <enumNames>UAVCAN</enumNames>
+            <enumNames>Comm Bridge</enumNames>
+        </can_mode>
+        <uavcan_esc_index>
+            <longName>UAVCAN ESC Index</longName>
+            <type>2</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_UAVCAN_ESC_INDEX</cDefine>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxInt>255</maxInt>
+            <minInt>0</minInt>
+            <showDisplay>0</showDisplay>
+            <stepInt>1</stepInt>
+            <valInt>0</valInt>
+            <suffix></suffix>
+            <vTx>1</vTx>
+        </uavcan_esc_index>
+        <app_to_use>
+            <longName>APP to Use</longName>
+            <type>4</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_APP_TO_USE</cDefine>
+            <valInt>3</valInt>
+            <enumNames>No App</enumNames>
+            <enumNames>PPM</enumNames>
+            <enumNames>ADC</enumNames>
+            <enumNames>UART</enumNames>
+            <enumNames>PPM and UART</enumNames>
+            <enumNames>ADC and UART</enumNames>
+            <enumNames>Nunchuk (I2C, Nyko Kama)</enumNames>
+            <enumNames>NRF</enumNames>
+            <enumNames>Custom User App</enumNames>
+            <enumNames>Balance</enumNames>
+        </app_to_use>
+        <app_ppm_conf.ctrl_type>
+            <longName>Control Type</longName>
+            <type>4</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_PPM_CTRL_TYPE</cDefine>
+            <valInt>9</valInt>
+            <enumNames>Off</enumNames>
+            <enumNames>Current</enumNames>
+            <enumNames>Current No Reverse</enumNames>
+            <enumNames>Current No Reverse With Brake</enumNames>
+            <enumNames>Duty Cycle</enumNames>
+            <enumNames>Duty Cycle No Reverse</enumNames>
+            <enumNames>PID Speed Control</enumNames>
+            <enumNames>PID Speed Control No Reverse</enumNames>
+            <enumNames>Current Hyst Reverse With Brake</enumNames>
+            <enumNames>Current Smart Reverse</enumNames>
+        </app_ppm_conf.ctrl_type>
+        <app_ppm_conf.pid_max_erpm>
+            <longName>PID Max ERPM</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_PPM_PID_MAX_ERPM</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1e+06</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>100</stepDouble>
+            <valDouble>15000</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_ppm_conf.pid_max_erpm>
+        <app_ppm_conf.hyst>
+            <longName>Input Deadband</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_PPM_HYST</cDefine>
+            <editorDecimalsDouble>0</editorDecimalsDouble>
+            <editorScale>100</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>1</showDisplay>
+            <stepDouble>1</stepDouble>
+            <valDouble>0.15</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> %</suffix>
+            <vTx>9</vTx>
+        </app_ppm_conf.hyst>
+        <app_ppm_conf.pulse_start>
+            <longName>Pulselength Start</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_PPM_PULSE_START</cDefine>
+            <editorDecimalsDouble>4</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>100</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>1</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> ms</suffix>
+            <vTx>9</vTx>
+        </app_ppm_conf.pulse_start>
+        <app_ppm_conf.pulse_end>
+            <longName>Pulselength End</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_PPM_PULSE_END</cDefine>
+            <editorDecimalsDouble>4</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>100</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>2</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> ms</suffix>
+            <vTx>9</vTx>
+        </app_ppm_conf.pulse_end>
+        <app_ppm_conf.pulse_center>
+            <longName>Pulselength Center</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_PPM_PULSE_CENTER</cDefine>
+            <editorDecimalsDouble>4</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>100</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>1.5</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> ms</suffix>
+            <vTx>9</vTx>
+        </app_ppm_conf.pulse_center>
+        <app_ppm_conf.median_filter>
+            <longName>Median Filter</longName>
+            <type>5</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_PPM_MEDIAN_FILTER</cDefine>
+            <valInt>1</valInt>
+        </app_ppm_conf.median_filter>
+        <app_ppm_conf.safe_start>
+            <longName>Safe Start</longName>
+            <type>5</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_PPM_SAFE_START</cDefine>
+            <valInt>1</valInt>
+        </app_ppm_conf.safe_start>
+        <app_ppm_conf.throttle_exp>
+            <longName>Throttle Expo</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_PPM_THROTTLE_EXP</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>1</editAsPercentage>
+            <maxDouble>5</maxDouble>
+            <minDouble>-5</minDouble>
+            <showDisplay>1</showDisplay>
+            <stepDouble>1</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_ppm_conf.throttle_exp>
+        <app_ppm_conf.throttle_exp_brake>
+            <longName>Throttle Expo Brake</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_PPM_THROTTLE_EXP_BRAKE</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>1</editAsPercentage>
+            <maxDouble>5</maxDouble>
+            <minDouble>-5</minDouble>
+            <showDisplay>1</showDisplay>
+            <stepDouble>1</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_ppm_conf.throttle_exp_brake>
+        <app_ppm_conf.throttle_exp_mode>
+            <longName>Throttle Expo Mode</longName>
+            <type>4</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_PPM_THROTTLE_EXP_MODE</cDefine>
+            <valInt>2</valInt>
+            <enumNames>Exponential</enumNames>
+            <enumNames>Natural</enumNames>
+            <enumNames>Polynomial</enumNames>
+        </app_ppm_conf.throttle_exp_mode>
+        <app_ppm_conf.ramp_time_pos>
+            <longName>Positive Ramping Time</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_PPM_RAMP_TIME_POS</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1000</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>0.9</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> s</suffix>
+            <vTx>9</vTx>
+        </app_ppm_conf.ramp_time_pos>
+        <app_ppm_conf.ramp_time_neg>
+            <longName>Negative Ramping Time</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_PPM_RAMP_TIME_NEG</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1000</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>0.3</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> s</suffix>
+            <vTx>9</vTx>
+        </app_ppm_conf.ramp_time_neg>
+        <app_ppm_conf.multi_esc>
+            <longName>Multiple VESCs Over CAN</longName>
+            <type>5</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_PPM_MULTI_ESC</cDefine>
+            <valInt>0</valInt>
+        </app_ppm_conf.multi_esc>
+        <app_ppm_conf.tc>
+            <longName>Traction Control</longName>
+            <type>5</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_PPM_TC</cDefine>
+            <valInt>0</valInt>
+        </app_ppm_conf.tc>
+        <app_ppm_conf.tc_max_diff>
+            <longName>TC Max ERPM Difference</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_PPM_TC_MAX_DIFF</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>100000</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>100</stepDouble>
+            <valDouble>3000</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_ppm_conf.tc_max_diff>
+        <app_ppm_conf.max_erpm_for_dir>
+            <longName>Max ERPM for direction switch</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_PPM_MAX_ERPM_FOR_DIR</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>100000</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>100</stepDouble>
+            <valDouble>4000</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_ppm_conf.max_erpm_for_dir>
+        <app_ppm_conf.smart_rev_max_duty>
+            <longName>Smart Reverse Max Duty Cycle</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_PPM_SMART_REV_MAX_DUTY</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>1</editAsPercentage>
+            <maxDouble>1</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>1</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0.07</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_ppm_conf.smart_rev_max_duty>
+        <app_ppm_conf.smart_rev_ramp_time>
+            <longName>Smart Reverse Ramp Time</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_PPM_SMART_REV_RAMP_TIME</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>100</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>3</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> s</suffix>
+            <vTx>9</vTx>
+        </app_ppm_conf.smart_rev_ramp_time>
+        <app_adc_conf.ctrl_type>
+            <longName>Control Type</longName>
+            <type>4</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_CTRL_TYPE</cDefine>
+            <valInt>0</valInt>
+            <enumNames>Off</enumNames>
+            <enumNames>Current</enumNames>
+            <enumNames>Current Reverse Center</enumNames>
+            <enumNames>Current Reverse Button</enumNames>
+            <enumNames>Current Reverse ADC2 Brake Button</enumNames>
+            <enumNames>Current Reverse Button Brake Center</enumNames>
+            <enumNames>Current No Reverse Brake Center</enumNames>
+            <enumNames>Current No Reverse Brake Button</enumNames>
+            <enumNames>Current No Reverse Brake ADC2</enumNames>
+            <enumNames>Duty Cycle</enumNames>
+            <enumNames>Duty Cycle Reverse Center</enumNames>
+            <enumNames>Duty Cycle Reverse Button</enumNames>
+            <enumNames>PID Speed</enumNames>
+            <enumNames>PID Speed Reverse Center</enumNames>
+            <enumNames>PID Speed Reverse Button</enumNames>
+        </app_adc_conf.ctrl_type>
+        <app_adc_conf.hyst>
+            <longName>Input Deadband</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_HYST</cDefine>
+            <editorDecimalsDouble>0</editorDecimalsDouble>
+            <editorScale>100</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>1</showDisplay>
+            <stepDouble>1</stepDouble>
+            <valDouble>0.15</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> %</suffix>
+            <vTx>9</vTx>
+        </app_adc_conf.hyst>
+        <app_adc_conf.voltage_start>
+            <longName>ADC1 Min Voltage</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_VOLTAGE_START</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>3.3</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>1</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0.9</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> V</suffix>
+            <vTx>9</vTx>
+        </app_adc_conf.voltage_start>
+        <app_adc_conf.voltage_end>
+            <longName>ADC1 Max Voltage</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_VOLTAGE_END</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>3.3</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>1</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>3</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> V</suffix>
+            <vTx>9</vTx>
+        </app_adc_conf.voltage_end>
+        <app_adc_conf.voltage_center>
+            <longName>ADC1 Center Voltage</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_VOLTAGE_CENTER</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>3.3</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>1</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>2</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> V</suffix>
+            <vTx>9</vTx>
+        </app_adc_conf.voltage_center>
+        <app_adc_conf.voltage2_start>
+            <longName>ADC2 Min Voltage</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_VOLTAGE2_START</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>3.3</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>1</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0.9</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> V</suffix>
+            <vTx>9</vTx>
+        </app_adc_conf.voltage2_start>
+        <app_adc_conf.voltage2_end>
+            <longName>ADC2 Max Voltage</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_VOLTAGE2_END</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>3.3</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>1</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>3</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> V</suffix>
+            <vTx>9</vTx>
+        </app_adc_conf.voltage2_end>
+        <app_adc_conf.use_filter>
+            <longName>Use Filter</longName>
+            <type>5</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_USE_FILTER</cDefine>
+            <valInt>1</valInt>
+        </app_adc_conf.use_filter>
+        <app_adc_conf.safe_start>
+            <longName>Safe Start</longName>
+            <type>5</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_SAFE_START</cDefine>
+            <valInt>1</valInt>
+        </app_adc_conf.safe_start>
+        <app_adc_conf.cc_button_inverted>
+            <longName>Invert Cruise Control Button</longName>
+            <type>5</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_CC_BUTTON_INVERTED</cDefine>
+            <valInt>0</valInt>
+        </app_adc_conf.cc_button_inverted>
+        <app_adc_conf.rev_button_inverted>
+            <longName>Invert Reverse Button</longName>
+            <type>5</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_REV_BUTTON_INVERTED</cDefine>
+            <valInt>0</valInt>
+        </app_adc_conf.rev_button_inverted>
+        <app_adc_conf.voltage_inverted>
+            <longName>Invert ADC1 Voltage</longName>
+            <type>5</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_VOLTAGE_INVERTED</cDefine>
+            <valInt>0</valInt>
+        </app_adc_conf.voltage_inverted>
+        <app_adc_conf.voltage2_inverted>
+            <longName>Invert ADC2 Voltage</longName>
+            <type>5</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_VOLTAGE2_INVERTED</cDefine>
+            <valInt>0</valInt>
+        </app_adc_conf.voltage2_inverted>
+        <app_adc_conf.throttle_exp>
+            <longName>Throttle Expo</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_THROTTLE_EXP</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>1</editAsPercentage>
+            <maxDouble>5</maxDouble>
+            <minDouble>-5</minDouble>
+            <showDisplay>1</showDisplay>
+            <stepDouble>1</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_adc_conf.throttle_exp>
+        <app_adc_conf.throttle_exp_brake>
+            <longName>Throttle Expo Brake</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_THROTTLE_EXP_BRAKE</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>1</editAsPercentage>
+            <maxDouble>5</maxDouble>
+            <minDouble>-5</minDouble>
+            <showDisplay>1</showDisplay>
+            <stepDouble>1</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_adc_conf.throttle_exp_brake>
+        <app_adc_conf.throttle_exp_mode>
+            <longName>Throttle Expo Mode</longName>
+            <type>4</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_THROTTLE_EXP_MODE</cDefine>
+            <valInt>2</valInt>
+            <enumNames>Exponential</enumNames>
+            <enumNames>Natural</enumNames>
+            <enumNames>Polynomial</enumNames>
+        </app_adc_conf.throttle_exp_mode>
+        <app_adc_conf.ramp_time_pos>
+            <longName>Positive Ramping Time</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_RAMP_TIME_POS</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1000</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>0.9</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> s</suffix>
+            <vTx>9</vTx>
+        </app_adc_conf.ramp_time_pos>
+        <app_adc_conf.ramp_time_neg>
+            <longName>Negative Ramping Time</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_RAMP_TIME_NEG</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1000</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>0.3</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> s</suffix>
+            <vTx>9</vTx>
+        </app_adc_conf.ramp_time_neg>
+        <app_adc_conf.multi_esc>
+            <longName>Multiple VESCs Over CAN</longName>
+            <type>5</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_MULTI_ESC</cDefine>
+            <valInt>0</valInt>
+        </app_adc_conf.multi_esc>
+        <app_adc_conf.tc>
+            <longName>Traction Control</longName>
+            <type>5</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_TC</cDefine>
+            <valInt>0</valInt>
+        </app_adc_conf.tc>
+        <app_adc_conf.tc_max_diff>
+            <longName>TC Max ERPM Difference</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_TC_MAX_DIFF</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>100000</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>100</stepDouble>
+            <valDouble>3000</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_adc_conf.tc_max_diff>
+        <app_adc_conf.update_rate_hz>
+            <longName>Update Rate</longName>
+            <type>2</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_ADC_UPDATE_RATE_HZ</cDefine>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxInt>100000</maxInt>
+            <minInt>0</minInt>
+            <showDisplay>0</showDisplay>
+            <stepInt>10</stepInt>
+            <valInt>500</valInt>
+            <suffix> Hz</suffix>
+            <vTx>3</vTx>
+        </app_adc_conf.update_rate_hz>
+        <app_uart_baudrate>
+            <longName>Baudrate</longName>
+            <type>2</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_UART_BAUDRATE</cDefine>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxInt>20000000</maxInt>
+            <minInt>0</minInt>
+            <showDisplay>0</showDisplay>
+            <stepInt>1</stepInt>
+            <valInt>115200</valInt>
+            <suffix> bps</suffix>
+            <vTx>5</vTx>
+        </app_uart_baudrate>
+        <app_chuk_conf.ctrl_type>
+            <longName>Control Type</longName>
+            <type>4</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_CHUK_CTRL_TYPE</cDefine>
+            <valInt>1</valInt>
+            <enumNames>Off</enumNames>
+            <enumNames>Current</enumNames>
+            <enumNames>Current No Reverse</enumNames>
+        </app_chuk_conf.ctrl_type>
+        <app_chuk_conf.hyst>
+            <longName>Input Deadband</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_CHUK_HYST</cDefine>
+            <editorDecimalsDouble>0</editorDecimalsDouble>
+            <editorScale>100</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>1</showDisplay>
+            <stepDouble>1</stepDouble>
+            <valDouble>0.15</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> %</suffix>
+            <vTx>9</vTx>
+        </app_chuk_conf.hyst>
+        <app_chuk_conf.ramp_time_pos>
+            <longName>Positive Ramping Time</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_CHUK_RAMP_TIME_POS</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1000</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>0.9</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> s</suffix>
+            <vTx>9</vTx>
+        </app_chuk_conf.ramp_time_pos>
+        <app_chuk_conf.ramp_time_neg>
+            <longName>Negative Ramping Time</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_CHUK_RAMP_TIME_NEG</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1000</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>0.3</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> s</suffix>
+            <vTx>9</vTx>
+        </app_chuk_conf.ramp_time_neg>
+        <app_chuk_conf.stick_erpm_per_s_in_cc>
+            <longName>ERPM Per Second Cruise Control</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_STICK_ERPM_PER_S_IN_CC</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1e+06</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>500</stepDouble>
+            <valDouble>3000</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_chuk_conf.stick_erpm_per_s_in_cc>
+        <app_chuk_conf.throttle_exp>
+            <longName>Throttle Expo</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_CHUK_THROTTLE_EXP</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>1</editAsPercentage>
+            <maxDouble>5</maxDouble>
+            <minDouble>-5</minDouble>
+            <showDisplay>1</showDisplay>
+            <stepDouble>1</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_chuk_conf.throttle_exp>
+        <app_chuk_conf.throttle_exp_brake>
+            <longName>Throttle Expo Brake</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_CHUK_THROTTLE_EXP_BRAKE</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>1</editAsPercentage>
+            <maxDouble>5</maxDouble>
+            <minDouble>-5</minDouble>
+            <showDisplay>1</showDisplay>
+            <stepDouble>1</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_chuk_conf.throttle_exp_brake>
+        <app_chuk_conf.throttle_exp_mode>
+            <longName>Throttle Expo Mode</longName>
+            <type>4</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_CHUK_THROTTLE_EXP_MODE</cDefine>
+            <valInt>2</valInt>
+            <enumNames>Exponential</enumNames>
+            <enumNames>Natural</enumNames>
+            <enumNames>Polynomial</enumNames>
+        </app_chuk_conf.throttle_exp_mode>
+        <app_chuk_conf.multi_esc>
+            <longName>Multiple VESCs Over CAN</longName>
+            <type>5</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_CHUK_MULTI_ESC</cDefine>
+            <valInt>0</valInt>
+        </app_chuk_conf.multi_esc>
+        <app_chuk_conf.tc>
+            <longName>Traction Control</longName>
+            <type>5</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_CHUK_TC</cDefine>
+            <valInt>0</valInt>
+        </app_chuk_conf.tc>
+        <app_chuk_conf.tc_max_diff>
+            <longName>TC Max ERPM Difference</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_CHUK_TC_MAX_DIFF</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>100000</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>100</stepDouble>
+            <valDouble>3000</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_chuk_conf.tc_max_diff>
+        <app_chuk_conf.use_smart_rev>
+            <longName>Use Smart Reverse</longName>
+            <type>5</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_CHUK_USE_SMART_REV</cDefine>
+            <valInt>1</valInt>
+        </app_chuk_conf.use_smart_rev>
+        <app_chuk_conf.smart_rev_max_duty>
+            <longName>Smart Reverse Max Duty Cycle</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_CHUK_SMART_REV_MAX_DUTY</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>1</editAsPercentage>
+            <maxDouble>1</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>1</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0.07</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_chuk_conf.smart_rev_max_duty>
+        <app_chuk_conf.smart_rev_ramp_time>
+            <longName>Smart Reverse Ramp Time</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_CHUK_SMART_REV_RAMP_TIME</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>100</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>3</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> s</suffix>
+            <vTx>9</vTx>
+        </app_chuk_conf.smart_rev_ramp_time>
+        <app_nrf_conf.speed>
+            <longName>Speed</longName>
+            <type>4</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_NRF_SPEED</cDefine>
+            <valInt>2</valInt>
+            <enumNames>250 Kbit/s</enumNames>
+            <enumNames>1 MBit/s</enumNames>
+            <enumNames>2 MBit/s</enumNames>
+        </app_nrf_conf.speed>
+        <app_nrf_conf.power>
+            <longName>TX Power</longName>
+            <type>4</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_NRF_POWER</cDefine>
+            <valInt>3</valInt>
+            <enumNames>-18 dBm</enumNames>
+            <enumNames>-12 dBm</enumNames>
+            <enumNames>-6 dBm</enumNames>
+            <enumNames>0 dBm</enumNames>
+            <enumNames>OFF</enumNames>
+        </app_nrf_conf.power>
+        <app_nrf_conf.crc_type>
+            <longName>CRC</longName>
+            <type>4</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_NRF_CRC</cDefine>
+            <valInt>1</valInt>
+            <enumNames>Disabled</enumNames>
+            <enumNames>1 Byte</enumNames>
+            <enumNames>2 Byte</enumNames>
+        </app_nrf_conf.crc_type>
+        <app_nrf_conf.retry_delay>
+            <longName>Retry Delay</longName>
+            <type>4</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_NRF_RETR_DELAY</cDefine>
+            <valInt>0</valInt>
+            <enumNames>250 µS</enumNames>
+            <enumNames>500 µS</enumNames>
+            <enumNames>750 µS</enumNames>
+            <enumNames>1000 µS</enumNames>
+            <enumNames>1250 µS</enumNames>
+            <enumNames>1500 µS</enumNames>
+            <enumNames>1750 µS</enumNames>
+            <enumNames>2000 µS</enumNames>
+            <enumNames>2250 µS</enumNames>
+            <enumNames>2500 µS</enumNames>
+            <enumNames>2750 µS</enumNames>
+            <enumNames>3000 µS</enumNames>
+            <enumNames>3250 µS</enumNames>
+            <enumNames>3500 µS</enumNames>
+            <enumNames>3750 µS</enumNames>
+            <enumNames>4000 µS</enumNames>
+        </app_nrf_conf.retry_delay>
+        <app_nrf_conf.retries>
+            <longName>Retries</longName>
+            <type>2</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_NRF_RETRIES</cDefine>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxInt>15</maxInt>
+            <minInt>0</minInt>
+            <showDisplay>0</showDisplay>
+            <stepInt>1</stepInt>
+            <valInt>3</valInt>
+            <suffix></suffix>
+            <vTx>2</vTx>
+        </app_nrf_conf.retries>
+        <app_nrf_conf.channel>
+            <longName>Radio Channel</longName>
+            <type>2</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_NRF_CHANNEL</cDefine>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxInt>125</maxInt>
+            <minInt>0</minInt>
+            <showDisplay>0</showDisplay>
+            <stepInt>1</stepInt>
+            <valInt>76</valInt>
+            <suffix></suffix>
+            <vTx>2</vTx>
+        </app_nrf_conf.channel>
+        <app_nrf_conf.address__0>
+            <longName>Address 0</longName>
+            <type>2</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_NRF_ADDR_B0</cDefine>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxInt>255</maxInt>
+            <minInt>0</minInt>
+            <showDisplay>0</showDisplay>
+            <stepInt>1</stepInt>
+            <valInt>198</valInt>
+            <suffix></suffix>
+            <vTx>1</vTx>
+        </app_nrf_conf.address__0>
+        <app_nrf_conf.address__1>
+            <longName>Address 1</longName>
+            <type>2</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_NRF_ADDR_B1</cDefine>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxInt>255</maxInt>
+            <minInt>0</minInt>
+            <showDisplay>0</showDisplay>
+            <stepInt>1</stepInt>
+            <valInt>199</valInt>
+            <suffix></suffix>
+            <vTx>1</vTx>
+        </app_nrf_conf.address__1>
+        <app_nrf_conf.address__2>
+            <longName>Address 2</longName>
+            <type>2</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_NRF_ADDR_B2</cDefine>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxInt>255</maxInt>
+            <minInt>0</minInt>
+            <showDisplay>0</showDisplay>
+            <stepInt>1</stepInt>
+            <valInt>0</valInt>
+            <suffix></suffix>
+            <vTx>1</vTx>
+        </app_nrf_conf.address__2>
+        <app_nrf_conf.send_crc_ack>
+            <longName>Send ACK</longName>
+            <type>5</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_NRF_SEND_CRC_ACK</cDefine>
+            <valInt>1</valInt>
+        </app_nrf_conf.send_crc_ack>
+        <app_balance_conf.kp>
+            <longName>P</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_KP</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1e+06</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.kp>
+        <app_balance_conf.ki>
+            <longName>I</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_KI</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1e+06</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.ki>
+        <app_balance_conf.kd>
+            <longName>D</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_KD</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1e+06</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.kd>
+        <app_balance_conf.hertz>
+            <longName>Loop Hertz</longName>
+            <type>2</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_HERTZ</cDefine>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxInt>4000</maxInt>
+            <minInt>50</minInt>
+            <showDisplay>0</showDisplay>
+            <stepInt>100</stepInt>
+            <valInt>1000</valInt>
+            <suffix> Hz</suffix>
+            <vTx>3</vTx>
+        </app_balance_conf.hertz>
+        <app_balance_conf.pitch_fault>
+            <longName>Pitch Axis Fault Cutoff</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_PITCH_FAULT</cDefine>
+            <editorDecimalsDouble>1</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>180</maxDouble>
+            <minDouble>-180</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>1</stepDouble>
+            <valDouble>20</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> °</suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.pitch_fault>
+        <app_balance_conf.roll_fault>
+            <longName>Roll Axis Fault Cutoff</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_ROLL_FAULT</cDefine>
+            <editorDecimalsDouble>1</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>180</maxDouble>
+            <minDouble>-180</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>1</stepDouble>
+            <valDouble>45</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> °</suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.roll_fault>
+        <app_balance_conf.adc1>
+            <longName>ADC1 Switch Voltage</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_ADC1</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>3.3</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>1</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> V</suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.adc1>
+        <app_balance_conf.adc2>
+            <longName>ADC2 Switch Voltage</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_ADC2</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>3.3</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>1</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> V</suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.adc2>
+        <app_balance_conf.overspeed_duty>
+            <longName>Cutoff Duty Cycle (Causes "Dead" State)</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_OVERSPEED_DUTY</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0.9</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.overspeed_duty>
+        <app_balance_conf.tiltback_duty>
+            <longName>Duty Cycle Tiltback</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_TILTBACK_DUTY</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0.75</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.tiltback_duty>
+        <app_balance_conf.tiltback_angle>
+            <longName>Tiltback Angle</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_TILTBACK_ANGLE</cDefine>
+            <editorDecimalsDouble>1</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>45</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>15</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> °</suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.tiltback_angle>
+        <app_balance_conf.tiltback_speed>
+            <longName>Tiltback Speed</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_TILTBACK_SPEED</cDefine>
+            <editorDecimalsDouble>1</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>100</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>5</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> °/s</suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.tiltback_speed>
+        <app_balance_conf.tiltback_high_voltage>
+            <longName>High Voltage Tiltback</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_TILTBACK_HIGH_V</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>700</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>100</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> V</suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.tiltback_high_voltage>
+        <app_balance_conf.tiltback_low_voltage>
+            <longName>Low Voltage Tiltback</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_TILTBACK_LOW_V</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>700</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> V</suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.tiltback_low_voltage>
+        <app_balance_conf.startup_pitch_tolerance>
+            <longName>Startup Pitch Axis Angle Tolerance</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_STARTUP_PITCH_TOLERANCE</cDefine>
+            <editorDecimalsDouble>1</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>80</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>20</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> °</suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.startup_pitch_tolerance>
+        <app_balance_conf.startup_roll_tolerance>
+            <longName>Startup Roll Axis Angle Tolerance</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_STARTUP_ROLL_TOLERANCE</cDefine>
+            <editorDecimalsDouble>1</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>80</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>8</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> °</suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.startup_roll_tolerance>
+        <app_balance_conf.startup_speed>
+            <longName>Startup Centering Speed</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_STARTUP_SPEED</cDefine>
+            <editorDecimalsDouble>1</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>100</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>30</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> °/s</suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.startup_speed>
+        <app_balance_conf.deadzone>
+            <longName>Deadzone</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_DEADZONE</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>5</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> °</suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.deadzone>
+        <app_balance_conf.current_boost>
+            <longName>Current Boost</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_CURRENT_BOOST</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>10</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> A</suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.current_boost>
+        <app_balance_conf.multi_esc>
+            <longName>Multiple VESCs Over CAN</longName>
+            <type>5</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_MULTI_ESC</cDefine>
+            <valInt>0</valInt>
+        </app_balance_conf.multi_esc>
+        <app_balance_conf.yaw_kp>
+            <longName>Yaw P</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_YAW_KP</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>10000</maxDouble>
+            <minDouble>-10000</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.yaw_kp>
+        <app_balance_conf.yaw_ki>
+            <longName>Yaw I</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_YAW_KI</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>10000</maxDouble>
+            <minDouble>-10000</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.yaw_ki>
+        <app_balance_conf.yaw_kd>
+            <longName>Yaw D</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_YAW_KD</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>10000</maxDouble>
+            <minDouble>-10000</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.yaw_kd>
+        <app_balance_conf.roll_steer_kp>
+            <longName>Roll Steer KP</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_ROLL_STEER_KP</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>10000</maxDouble>
+            <minDouble>-10000</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.roll_steer_kp>
+        <app_balance_conf.brake_current>
+            <longName>Brake Current</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_BRAKE_CURRENT</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>100</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> A</suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.brake_current>
+        <app_balance_conf.overspeed_delay>
+            <longName>Overspeed Delay</longName>
+            <type>2</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_OVERSPEED_DELAY</cDefine>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxInt>10000</maxInt>
+            <minInt>0</minInt>
+            <showDisplay>0</showDisplay>
+            <stepInt>10</stepInt>
+            <valInt>0</valInt>
+            <suffix> ms</suffix>
+            <vTx>3</vTx>
+        </app_balance_conf.overspeed_delay>
+        <app_balance_conf.fault_delay>
+            <longName>Fault Delay</longName>
+            <type>2</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_FAULT_DELAY</cDefine>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxInt>10000</maxInt>
+            <minInt>0</minInt>
+            <showDisplay>0</showDisplay>
+            <stepInt>10</stepInt>
+            <valInt>0</valInt>
+            <suffix> ms</suffix>
+            <vTx>3</vTx>
+        </app_balance_conf.fault_delay>
+        <app_balance_conf.tiltback_constant>
+            <longName>Constant Tiltback</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_TILTBACK_CONSTANT</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>80</maxDouble>
+            <minDouble>-80</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>1</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix> °</suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.tiltback_constant>
+        <app_balance_conf.roll_steer_erpm_kp>
+            <longName>Roll Steer ERPM KP</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_ROLL_STEER_ERPM_KP</cDefine>
+            <editorDecimalsDouble>5</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>10000</maxDouble>
+            <minDouble>-10000</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.0001</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.roll_steer_erpm_kp>
+        <app_balance_conf.yaw_current_clamp>
+            <longName>Yaw Current Clamp</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_YAW_CURRENT_CLAMP</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>100</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>100</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix> A</suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.yaw_current_clamp>
+        <app_balance_conf.adc_half_fault_erpm>
+            <longName>ADC Half State Fault ERPM</longName>
+            <type>2</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_ADC_HALF_FAULT_ERPM</cDefine>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxInt>100000</maxInt>
+            <minInt>0</minInt>
+            <showDisplay>0</showDisplay>
+            <stepInt>10</stepInt>
+            <valInt>1,000</valInt>
+            <suffix> ERPM</suffix>
+            <vTx>3</vTx>
+        </app_balance_conf.adc_half_fault_erpm>
+        <app_balance_conf.setpoint_pitch_filter>
+            <longName>Setpoint Pitch Low Pass Filter</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_SETPOINT_PITCH_FILTER</cDefine>
+            <editorDecimalsDouble>5</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.0001</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.setpoint_pitch_filter>
+        <app_balance_conf.setpoint_target_filter>
+            <longName>Setpoint Target Low Pass Filter</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_SETPOINT_TARGET_FILTER</cDefine>
+            <editorDecimalsDouble>5</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.0001</stepDouble>
+            <valDouble>1</valDouble>
+            <vTxDoubleScale>1000</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.setpoint_target_filter>
+        <app_balance_conf.setpoint_clamp>
+            <longName>Setpoint Clamp</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_BALANCE_SETPOINT_CLAMP</cDefine>
+            <editorDecimalsDouble>2</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>80</maxDouble>
+            <minDouble>-0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>1</stepDouble>
+            <valDouble>80</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix> °</suffix>
+            <vTx>9</vTx>
+        </app_balance_conf.setpoint_clamp>
+        <imu_conf.type>
+            <longName>IMU Type</longName>
+            <type>4</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_IMU_TYPE</cDefine>
+            <valInt>1</valInt>
+            <enumNames>IMU_TYPE_OFF</enumNames>
+            <enumNames>IMU_TYPE_INTERNAL</enumNames>
+            <enumNames>IMU_TYPE_EXTERNAL_MPU9X50</enumNames>
+            <enumNames>IMU_TYPE_EXTERNAL_ICM20948</enumNames>
+            <enumNames>IMU_TYPE_EXTERNAL_BMI160</enumNames>
+        </imu_conf.type>
+        <imu_conf.mode>
+            <longName>IMU AHRS Mode</longName>
+            <type>4</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_IMU_AHRS_MODE</cDefine>
+            <valInt>0</valInt>
+            <enumNames>AHRS_MODE_MADGWICK</enumNames>
+            <enumNames>AHRS_MODE_MAHONY</enumNames>
+        </imu_conf.mode>
+        <imu_conf.sample_rate_hz>
+            <longName>Sample Rate</longName>
+            <type>2</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_IMU_SAMPLE_RATE_HZ</cDefine>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxInt>1000</maxInt>
+            <minInt>1</minInt>
+            <showDisplay>0</showDisplay>
+            <stepInt>10</stepInt>
+            <valInt>200</valInt>
+            <suffix> Hz</suffix>
+            <vTx>3</vTx>
+        </imu_conf.sample_rate_hz>
+        <imu_conf.accel_confidence_decay>
+            <longName>Accelerometer Confidence Decay</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_IMU_ACCEL_CONFIDENCE_DECAY</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>999</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>1</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </imu_conf.accel_confidence_decay>
+        <imu_conf.mahony_kp>
+            <longName>Mahony KP</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_IMU_MAHONY_KP</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>999</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>0.3</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </imu_conf.mahony_kp>
+        <imu_conf.mahony_ki>
+            <longName>Mahony KI</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_IMU_MAHONY_KI</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>999</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </imu_conf.mahony_ki>
+        <imu_conf.madgwick_beta>
+            <longName>Madgwick Beta</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_IMU_MADGWICK_BETA</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>999</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0.1</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix></suffix>
+            <vTx>9</vTx>
+        </imu_conf.madgwick_beta>
+        <imu_conf.rot_roll>
+            <longName>Imu Rotation Roll</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_IMU_ROT_ROLL</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>360</maxDouble>
+            <minDouble>-360</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>1</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix> °</suffix>
+            <vTx>9</vTx>
+        </imu_conf.rot_roll>
+        <imu_conf.rot_pitch>
+            <longName>Imu Rotation Pitch</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_IMU_ROT_PITCH</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>360</maxDouble>
+            <minDouble>-360</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>1</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix> °</suffix>
+            <vTx>9</vTx>
+        </imu_conf.rot_pitch>
+        <imu_conf.rot_yaw>
+            <longName>Imu Rotation Yaw</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_IMU_ROT_YAW</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>360</maxDouble>
+            <minDouble>-360</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>1</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix> °</suffix>
+            <vTx>9</vTx>
+        </imu_conf.rot_yaw>
+        <imu_conf.accel_offsets__0>
+            <longName>Accel Offset X</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_IMU_A_OFFSET_0</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>16</maxDouble>
+            <minDouble>-16</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix> G</suffix>
+            <vTx>9</vTx>
+        </imu_conf.accel_offsets__0>
+        <imu_conf.accel_offsets__1>
+            <longName>Accel Offset Y</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_IMU_A_OFFSET_1</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>16</maxDouble>
+            <minDouble>-16</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix> G</suffix>
+            <vTx>9</vTx>
+        </imu_conf.accel_offsets__1>
+        <imu_conf.accel_offsets__2>
+            <longName>Accel Offset Z</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_IMU_A_OFFSET_2</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>16</maxDouble>
+            <minDouble>-16</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix> G</suffix>
+            <vTx>9</vTx>
+        </imu_conf.accel_offsets__2>
+        <imu_conf.gyro_offsets__0>
+            <longName>Gyro Offset X</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_IMU_G_OFFSET_0</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1000</maxDouble>
+            <minDouble>-1000</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix> °/s</suffix>
+            <vTx>9</vTx>
+        </imu_conf.gyro_offsets__0>
+        <imu_conf.gyro_offsets__1>
+            <longName>Gyro Offset Y</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_IMU_G_OFFSET_1</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1000</maxDouble>
+            <minDouble>-1000</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix> °/s</suffix>
+            <vTx>9</vTx>
+        </imu_conf.gyro_offsets__1>
+        <imu_conf.gyro_offsets__2>
+            <longName>Gyro Offset Z</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_IMU_G_OFFSET_2</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1000</maxDouble>
+            <minDouble>-1000</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.01</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix> °/s</suffix>
+            <vTx>9</vTx>
+        </imu_conf.gyro_offsets__2>
+        <imu_conf.gyro_offset_comp_fact__0>
+            <longName>Gyro Offset Comp X</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_IMU_G_OFFSET_COMP_FACT_0</cDefine>
+            <editorDecimalsDouble>4</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.001</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix> °/s</suffix>
+            <vTx>9</vTx>
+        </imu_conf.gyro_offset_comp_fact__0>
+        <imu_conf.gyro_offset_comp_fact__1>
+            <longName>Gyro Offset Comp Y</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_IMU_G_OFFSET_COMP_FACT_1</cDefine>
+            <editorDecimalsDouble>4</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.001</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix> °/s</suffix>
+            <vTx>9</vTx>
+        </imu_conf.gyro_offset_comp_fact__1>
+        <imu_conf.gyro_offset_comp_fact__2>
+            <longName>Gyro Offset Comp Z</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_IMU_G_OFFSET_COMP_FACT_2</cDefine>
+            <editorDecimalsDouble>4</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.001</stepDouble>
+            <valDouble>0</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix> °/s</suffix>
+            <vTx>9</vTx>
+        </imu_conf.gyro_offset_comp_fact__2>
+        <imu_conf.gyro_offset_comp_clamp>
+            <longName>Gyro Offset Comp Clamp</longName>
+            <type>1</type>
+            <transmittable>1</transmittable>
+            <cDefine>APPCONF_IMU_G_OFFSET_COMP_CLAMP</cDefine>
+            <editorDecimalsDouble>3</editorDecimalsDouble>
+            <editorScale>1</editorScale>
+            <editAsPercentage>0</editAsPercentage>
+            <maxDouble>1000</maxDouble>
+            <minDouble>0</minDouble>
+            <showDisplay>0</showDisplay>
+            <stepDouble>0.1</stepDouble>
+            <valDouble>5</valDouble>
+            <vTxDoubleScale>1</vTxDoubleScale>
+            <suffix> °/s</suffix>
+            <vTx>9</vTx>
+        </imu_conf.gyro_offset_comp_clamp>
+    </Params>
+    <SerOrder>
+        <ser>controller_id</ser>
+        <ser>timeout_msec</ser>
+        <ser>timeout_brake_current</ser>
+        <ser>send_can_status</ser>
+        <ser>send_can_status_rate_hz</ser>
+        <ser>can_baud_rate</ser>
+        <ser>pairing_done</ser>
+        <ser>permanent_uart_enabled</ser>
+        <ser>shutdown_mode</ser>
+        <ser>can_mode</ser>
+        <ser>uavcan_esc_index</ser>
+        <ser>app_to_use</ser>
+        <ser>app_ppm_conf.ctrl_type</ser>
+        <ser>app_ppm_conf.pid_max_erpm</ser>
+        <ser>app_ppm_conf.hyst</ser>
+        <ser>app_ppm_conf.pulse_start</ser>
+        <ser>app_ppm_conf.pulse_end</ser>
+        <ser>app_ppm_conf.pulse_center</ser>
+        <ser>app_ppm_conf.median_filter</ser>
+        <ser>app_ppm_conf.safe_start</ser>
+        <ser>app_ppm_conf.throttle_exp</ser>
+        <ser>app_ppm_conf.throttle_exp_brake</ser>
+        <ser>app_ppm_conf.throttle_exp_mode</ser>
+        <ser>app_ppm_conf.ramp_time_pos</ser>
+        <ser>app_ppm_conf.ramp_time_neg</ser>
+        <ser>app_ppm_conf.multi_esc</ser>
+        <ser>app_ppm_conf.tc</ser>
+        <ser>app_ppm_conf.tc_max_diff</ser>
+        <ser>app_ppm_conf.max_erpm_for_dir</ser>
+        <ser>app_ppm_conf.smart_rev_max_duty</ser>
+        <ser>app_ppm_conf.smart_rev_ramp_time</ser>
+        <ser>app_adc_conf.ctrl_type</ser>
+        <ser>app_adc_conf.hyst</ser>
+        <ser>app_adc_conf.voltage_start</ser>
+        <ser>app_adc_conf.voltage_end</ser>
+        <ser>app_adc_conf.voltage_center</ser>
+        <ser>app_adc_conf.voltage2_start</ser>
+        <ser>app_adc_conf.voltage2_end</ser>
+        <ser>app_adc_conf.use_filter</ser>
+        <ser>app_adc_conf.safe_start</ser>
+        <ser>app_adc_conf.cc_button_inverted</ser>
+        <ser>app_adc_conf.rev_button_inverted</ser>
+        <ser>app_adc_conf.voltage_inverted</ser>
+        <ser>app_adc_conf.voltage2_inverted</ser>
+        <ser>app_adc_conf.throttle_exp</ser>
+        <ser>app_adc_conf.throttle_exp_brake</ser>
+        <ser>app_adc_conf.throttle_exp_mode</ser>
+        <ser>app_adc_conf.ramp_time_pos</ser>
+        <ser>app_adc_conf.ramp_time_neg</ser>
+        <ser>app_adc_conf.multi_esc</ser>
+        <ser>app_adc_conf.tc</ser>
+        <ser>app_adc_conf.tc_max_diff</ser>
+        <ser>app_adc_conf.update_rate_hz</ser>
+        <ser>app_uart_baudrate</ser>
+        <ser>app_chuk_conf.ctrl_type</ser>
+        <ser>app_chuk_conf.hyst</ser>
+        <ser>app_chuk_conf.ramp_time_pos</ser>
+        <ser>app_chuk_conf.ramp_time_neg</ser>
+        <ser>app_chuk_conf.stick_erpm_per_s_in_cc</ser>
+        <ser>app_chuk_conf.throttle_exp</ser>
+        <ser>app_chuk_conf.throttle_exp_brake</ser>
+        <ser>app_chuk_conf.throttle_exp_mode</ser>
+        <ser>app_chuk_conf.multi_esc</ser>
+        <ser>app_chuk_conf.tc</ser>
+        <ser>app_chuk_conf.tc_max_diff</ser>
+        <ser>app_chuk_conf.use_smart_rev</ser>
+        <ser>app_chuk_conf.smart_rev_max_duty</ser>
+        <ser>app_chuk_conf.smart_rev_ramp_time</ser>
+        <ser>app_nrf_conf.speed</ser>
+        <ser>app_nrf_conf.power</ser>
+        <ser>app_nrf_conf.crc_type</ser>
+        <ser>app_nrf_conf.retry_delay</ser>
+        <ser>app_nrf_conf.retries</ser>
+        <ser>app_nrf_conf.channel</ser>
+        <ser>app_nrf_conf.address__0</ser>
+        <ser>app_nrf_conf.address__1</ser>
+        <ser>app_nrf_conf.address__2</ser>
+        <ser>app_nrf_conf.send_crc_ack</ser>
+        <ser>app_balance_conf.kp</ser>
+        <ser>app_balance_conf.ki</ser>
+        <ser>app_balance_conf.kd</ser>
+        <ser>app_balance_conf.hertz</ser>
+        <ser>app_balance_conf.pitch_fault</ser>
+        <ser>app_balance_conf.roll_fault</ser>
+        <ser>app_balance_conf.adc1</ser>
+        <ser>app_balance_conf.adc2</ser>
+        <ser>app_balance_conf.overspeed_duty</ser>
+        <ser>app_balance_conf.tiltback_duty</ser>
+        <ser>app_balance_conf.tiltback_angle</ser>
+        <ser>app_balance_conf.tiltback_speed</ser>
+        <ser>app_balance_conf.tiltback_high_voltage</ser>
+        <ser>app_balance_conf.tiltback_low_voltage</ser>
+        <ser>app_balance_conf.startup_pitch_tolerance</ser>
+        <ser>app_balance_conf.startup_roll_tolerance</ser>
+        <ser>app_balance_conf.startup_speed</ser>
+        <ser>app_balance_conf.deadzone</ser>
+        <ser>app_balance_conf.current_boost</ser>
+        <ser>app_balance_conf.multi_esc</ser>
+        <ser>app_balance_conf.yaw_kp</ser>
+        <ser>app_balance_conf.yaw_ki</ser>
+        <ser>app_balance_conf.yaw_kd</ser>
+        <ser>app_balance_conf.roll_steer_kp</ser>
+        <ser>app_balance_conf.brake_current</ser>
+        <ser>app_balance_conf.overspeed_delay</ser>
+        <ser>app_balance_conf.fault_delay</ser>
+        <ser>app_balance_conf.tiltback_constant</ser>
+        <ser>app_balance_conf.roll_steer_erpm_kp</ser>
+        <ser>app_balance_conf.yaw_current_clamp</ser>
+        <ser>app_balance_conf.adc_half_fault_erpm</ser>
+        <ser>app_balance_conf.setpoint_pitch_filter</ser>
+        <ser>app_balance_conf.setpoint_target_filter</ser>
+        <ser>app_balance_conf.setpoint_clamp</ser>
+        <ser>imu_conf.type</ser>
+        <ser>imu_conf.mode</ser>
+        <ser>imu_conf.sample_rate_hz</ser>
+        <ser>imu_conf.accel_confidence_decay</ser>
+        <ser>imu_conf.mahony_kp</ser>
+        <ser>imu_conf.mahony_ki</ser>
+        <ser>imu_conf.madgwick_beta</ser>
+        <ser>imu_conf.rot_roll</ser>
+        <ser>imu_conf.rot_pitch</ser>
+        <ser>imu_conf.rot_yaw</ser>
+        <ser>imu_conf.accel_offsets__0</ser>
+        <ser>imu_conf.accel_offsets__1</ser>
+        <ser>imu_conf.accel_offsets__2</ser>
+        <ser>imu_conf.gyro_offsets__0</ser>
+        <ser>imu_conf.gyro_offsets__1</ser>
+        <ser>imu_conf.gyro_offsets__2</ser>
+        <ser>imu_conf.gyro_offset_comp_fact__0</ser>
+        <ser>imu_conf.gyro_offset_comp_fact__1</ser>
+        <ser>imu_conf.gyro_offset_comp_fact__2</ser>
+        <ser>imu_conf.gyro_offset_comp_clamp</ser>
+    </SerOrder>
+    <Grouping>
+        <group>
+            <groupName>General</groupName>
+            <subgroup>
+                <subgroupName>General</subgroupName>
+                <subgroupParams>
+                    <param>app_to_use</param>
+                    <param>controller_id</param>
+                    <param>timeout_msec</param>
+                    <param>timeout_brake_current</param>
+                    <param>send_can_status</param>
+                    <param>send_can_status_rate_hz</param>
+                    <param>can_baud_rate</param>
+                    <param>pairing_done</param>
+                    <param>permanent_uart_enabled</param>
+                    <param>shutdown_mode</param>
+                    <param>can_mode</param>
+                    <param>uavcan_esc_index</param>
+                </subgroupParams>
+            </subgroup>
+        </group>
+        <group>
+            <groupName>PPM</groupName>
+            <subgroup>
+                <subgroupName>General</subgroupName>
+                <subgroupParams>
+                    <param>app_ppm_conf.ctrl_type</param>
+                    <param>app_ppm_conf.median_filter</param>
+                    <param>app_ppm_conf.safe_start</param>
+                    <param>app_ppm_conf.pid_max_erpm</param>
+                    <param>app_ppm_conf.ramp_time_pos</param>
+                    <param>app_ppm_conf.ramp_time_neg</param>
+                    <param>app_ppm_conf.max_erpm_for_dir</param>
+                    <param>app_ppm_conf.smart_rev_max_duty</param>
+                    <param>app_ppm_conf.smart_rev_ramp_time</param>
+                    <param>::sep::Multiple VESCs over CAN</param>
+                    <param>app_ppm_conf.multi_esc</param>
+                    <param>app_ppm_conf.tc</param>
+                    <param>app_ppm_conf.tc_max_diff</param>
+                </subgroupParams>
+            </subgroup>
+            <subgroup>
+                <subgroupName>Mapping</subgroupName>
+                <subgroupParams>
+                    <param>app_ppm_conf.pulse_start</param>
+                    <param>app_ppm_conf.pulse_end</param>
+                    <param>app_ppm_conf.pulse_center</param>
+                    <param>app_ppm_conf.hyst</param>
+                </subgroupParams>
+            </subgroup>
+            <subgroup>
+                <subgroupName>Throttle Curve</subgroupName>
+                <subgroupParams>
+                    <param>app_ppm_conf.throttle_exp</param>
+                    <param>app_ppm_conf.throttle_exp_brake</param>
+                    <param>app_ppm_conf.throttle_exp_mode</param>
+                </subgroupParams>
+            </subgroup>
+        </group>
+        <group>
+            <groupName>ADC</groupName>
+            <subgroup>
+                <subgroupName>General</subgroupName>
+                <subgroupParams>
+                    <param>app_adc_conf.ctrl_type</param>
+                    <param>app_adc_conf.use_filter</param>
+                    <param>app_adc_conf.safe_start</param>
+                    <param>app_adc_conf.cc_button_inverted</param>
+                    <param>app_adc_conf.rev_button_inverted</param>
+                    <param>app_adc_conf.update_rate_hz</param>
+                    <param>app_adc_conf.ramp_time_pos</param>
+                    <param>app_adc_conf.ramp_time_neg</param>
+                    <param>::sep::Multiple VESCs over CAN-bus</param>
+                    <param>app_adc_conf.multi_esc</param>
+                    <param>app_adc_conf.tc</param>
+                    <param>app_adc_conf.tc_max_diff</param>
+                </subgroupParams>
+            </subgroup>
+            <subgroup>
+                <subgroupName>Mapping</subgroupName>
+                <subgroupParams>
+                    <param>app_adc_conf.hyst</param>
+                    <param>::sep::ADC 1</param>
+                    <param>app_adc_conf.voltage_start</param>
+                    <param>app_adc_conf.voltage_end</param>
+                    <param>app_adc_conf.voltage_center</param>
+                    <param>app_adc_conf.voltage_inverted</param>
+                    <param>::sep::ADC 2</param>
+                    <param>app_adc_conf.voltage2_start</param>
+                    <param>app_adc_conf.voltage2_end</param>
+                    <param>app_adc_conf.voltage2_inverted</param>
+                </subgroupParams>
+            </subgroup>
+            <subgroup>
+                <subgroupName>Throttle Curve</subgroupName>
+                <subgroupParams>
+                    <param>app_adc_conf.throttle_exp</param>
+                    <param>app_adc_conf.throttle_exp_brake</param>
+                    <param>app_adc_conf.throttle_exp_mode</param>
+                </subgroupParams>
+            </subgroup>
+        </group>
+        <group>
+            <groupName>UART</groupName>
+            <subgroup>
+                <subgroupName>General</subgroupName>
+                <subgroupParams>
+                    <param>app_uart_baudrate</param>
+                </subgroupParams>
+            </subgroup>
+        </group>
+        <group>
+            <groupName>VESC Remote</groupName>
+            <subgroup>
+                <subgroupName>General</subgroupName>
+                <subgroupParams>
+                    <param>app_chuk_conf.ctrl_type</param>
+                    <param>app_chuk_conf.ramp_time_pos</param>
+                    <param>app_chuk_conf.ramp_time_neg</param>
+                    <param>app_chuk_conf.stick_erpm_per_s_in_cc</param>
+                    <param>app_chuk_conf.hyst</param>
+                    <param>app_chuk_conf.use_smart_rev</param>
+                    <param>app_chuk_conf.smart_rev_max_duty</param>
+                    <param>app_chuk_conf.smart_rev_ramp_time</param>
+                    <param>::sep::Multiple VESCs over CAN-bus</param>
+                    <param>app_chuk_conf.multi_esc</param>
+                    <param>app_chuk_conf.tc</param>
+                    <param>app_chuk_conf.tc_max_diff</param>
+                </subgroupParams>
+            </subgroup>
+            <subgroup>
+                <subgroupName>Throttle Curve</subgroupName>
+                <subgroupParams>
+                    <param>app_chuk_conf.throttle_exp</param>
+                    <param>app_chuk_conf.throttle_exp_brake</param>
+                    <param>app_chuk_conf.throttle_exp_mode</param>
+                </subgroupParams>
+            </subgroup>
+        </group>
+        <group>
+            <groupName>NRF</groupName>
+            <subgroup>
+                <subgroupName>General</subgroupName>
+                <subgroupParams>
+                    <param>::sep::Radio</param>
+                    <param>app_nrf_conf.power</param>
+                    <param>app_nrf_conf.speed</param>
+                    <param>app_nrf_conf.channel</param>
+                    <param>::sep::Integrity</param>
+                    <param>app_nrf_conf.crc_type</param>
+                    <param>app_nrf_conf.send_crc_ack</param>
+                    <param>app_nrf_conf.retry_delay</param>
+                    <param>app_nrf_conf.retries</param>
+                    <param>::sep::Address</param>
+                    <param>app_nrf_conf.address__0</param>
+                    <param>app_nrf_conf.address__1</param>
+                    <param>app_nrf_conf.address__2</param>
+                </subgroupParams>
+            </subgroup>
+        </group>
+        <group>
+            <groupName>Balance</groupName>
+            <subgroup>
+                <subgroupName>Config</subgroupName>
+                <subgroupParams>
+                    <param>::sep::Startup</param>
+                    <param>app_balance_conf.startup_pitch_tolerance</param>
+                    <param>app_balance_conf.startup_roll_tolerance</param>
+                    <param>app_balance_conf.startup_speed</param>
+                    <param>app_balance_conf.brake_current</param>
+                    <param>::sep::Tiltback</param>
+                    <param>app_balance_conf.tiltback_angle</param>
+                    <param>app_balance_conf.tiltback_speed</param>
+                    <param>app_balance_conf.tiltback_duty</param>
+                    <param>app_balance_conf.tiltback_high_voltage</param>
+                    <param>app_balance_conf.tiltback_low_voltage</param>
+                    <param>app_balance_conf.tiltback_constant</param>
+                    <param>::sep::Overspeed</param>
+                    <param>app_balance_conf.overspeed_duty</param>
+                    <param>app_balance_conf.overspeed_delay</param>
+                    <param>::sep::Fault</param>
+                    <param>app_balance_conf.pitch_fault</param>
+                    <param>app_balance_conf.roll_fault</param>
+                    <param>app_balance_conf.adc1</param>
+                    <param>app_balance_conf.adc2</param>
+                    <param>app_balance_conf.adc_half_fault_erpm</param>
+                    <param>app_balance_conf.fault_delay</param>
+                </subgroupParams>
+            </subgroup>
+            <subgroup>
+                <subgroupName>Tune</subgroupName>
+                <subgroupParams>
+                    <param>::sep::PID</param>
+                    <param>app_balance_conf.kp</param>
+                    <param>app_balance_conf.ki</param>
+                    <param>app_balance_conf.kd</param>
+                    <param>::sep::Main Loop</param>
+                    <param>app_balance_conf.hertz</param>
+                    <param>::sep::Balance Filtering</param>
+                    <param>app_balance_conf.setpoint_pitch_filter</param>
+                    <param>app_balance_conf.setpoint_target_filter</param>
+                    <param>app_balance_conf.setpoint_clamp</param>
+                    <param>::sep::Multi ESC</param>
+                    <param>app_balance_conf.multi_esc</param>
+                    <param>app_balance_conf.yaw_kp</param>
+                    <param>app_balance_conf.yaw_ki</param>
+                    <param>app_balance_conf.yaw_kd</param>
+                    <param>app_balance_conf.roll_steer_kp</param>
+                    <param>app_balance_conf.roll_steer_erpm_kp</param>
+                    <param>app_balance_conf.yaw_current_clamp</param>
+                    <param>::sep::Experimental</param>
+                    <param>app_balance_conf.deadzone</param>
+                    <param>app_balance_conf.current_boost</param>
+                </subgroupParams>
+            </subgroup>
+        </group>
+        <group>
+            <groupName>IMU</groupName>
+            <subgroup>
+                <subgroupName>General</subgroupName>
+                <subgroupParams>
+                    <param>imu_conf.type</param>
+                    <param>imu_conf.sample_rate_hz</param>
+                    <param>::sep::Filters</param>
+                    <param>imu_conf.mode</param>
+                    <param>imu_conf.accel_confidence_decay</param>
+                    <param>imu_conf.mahony_kp</param>
+                    <param>imu_conf.mahony_ki</param>
+                    <param>imu_conf.madgwick_beta</param>
+                    <param>::sep::Rotation</param>
+                    <param>imu_conf.rot_roll</param>
+                    <param>imu_conf.rot_pitch</param>
+                    <param>imu_conf.rot_yaw</param>
+                    <param>::sep::Offsets</param>
+                    <param>imu_conf.accel_offsets__0</param>
+                    <param>imu_conf.accel_offsets__1</param>
+                    <param>imu_conf.accel_offsets__2</param>
+                    <param>imu_conf.gyro_offsets__0</param>
+                    <param>imu_conf.gyro_offsets__1</param>
+                    <param>imu_conf.gyro_offsets__2</param>
+                    <param>imu_conf.gyro_offset_comp_fact__0</param>
+                    <param>imu_conf.gyro_offset_comp_fact__1</param>
+                    <param>imu_conf.gyro_offset_comp_fact__2</param>
+                    <param>imu_conf.gyro_offset_comp_clamp</param>
+                </subgroupParams>
+            </subgroup>
+        </group>
+    </Grouping>
+</ConfigParams>

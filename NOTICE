@@ -1,0 +1,55 @@
+CubeMarsTool-Mac
+Copyright (C) 2026 CubeMarsTool-Mac contributors
+
+WHAT THIS IS
+
+A native macOS implementation of the VESC serial protocol, written for
+interoperability with VESC-derived motor controllers. It currently targets
+AK-series actuators; the protocol layer itself is not specific to them.
+
+The protocol originates in the VESC Project (vedderb/bldc and vesc_tool,
+GPLv3). See CREDITS.md.
+
+LICENSE SCOPE
+
+Except where a file or directory states otherwise, original source code authored
+for this project is offered under the GNU General Public License, version 3 or
+(at your option) any later version. See LICENSE.
+
+This notice does not claim ownership of, or grant a new license for, third-party
+material. The following categories sit outside this project's license grant
+unless their copyright holder or an applicable upstream license says otherwise:
+
+  - configuration schema files whose upstream provenance is not yet established;
+  - vendor documentation, firmware images, executables and artwork;
+  - device-specific research data, which is excluded from this distribution;
+  - any upstream code retained under its own copyright and license.
+
+Items with unresolved provenance stay out of a public release until their status
+is documented. See THIRD_PARTY_NOTICES.md and
+Docs/OPEN_SOURCE_RELEASE_AUDIT.md.
+
+HOW THE PROTOCOL WAS ESTABLISHED
+
+The protocol behaviour documented here was established through interoperability
+analysis: observing traffic on the wire and confirming behaviour against real
+hardware the author owns. Every documented claim carries a marker recording
+whether it was measured on hardware or inferred, and superseded conclusions are
+kept and labelled rather than deleted.
+
+This work exists so that independently written software can interoperate with
+hardware its owner already has. No vendor source code was available to this
+project, and no vendor software is redistributed with it.
+
+SAFETY
+
+This software can energise motors, cause unexpected rotation, change stored
+limits and rewrite controller firmware. Read DISCLAIMER.md before using it.
+Use of this software constitutes acceptance of the risk and liability terms
+stated there.
+
+INDEPENDENCE
+
+This is an independent, unofficial project. It is not affiliated with, endorsed
+by, or supported by any hardware vendor. Product and project names are used only
+to describe interoperability; trademarks belong to their respective owners.

@@ -1,0 +1,99 @@
+/* Config View */
+
+/* Config view status */
+"config.config_not_loaded" = "未读取参数";
+"config.config_loaded_description" = "连接后自动读取电机配置；或点"重新读取"。";
+"config.common_and_detection" = "常用 · 参数辨识";
+"config.common_params" = "常用参数";
+"config.search_placeholder" = "搜索参数…";
+"config.pending_changes" = "有未写入的修改";
+"config.refresh_config" = "重新读取";
+"config.write_to_motor" = "写入电机";
+
+/* Category names */
+"config.category_limits" = "限制 Limits";
+"config.category_foc" = "FOC";
+"config.category_setup" = "设置 Setup";
+"config.category_pid" = "PID";
+"config.category_motor" = "通用 Motor";
+"config.category_current" = "电流控制";
+"config.category_bldc_hall" = "BLDC/Hall";
+"config.category_other" = "其他 Other";
+
+/* Output configuration health */
+"config.output_disabled" = "输出被参数禁用：控制和辨识不会生效";
+"config.abnormal_fields" = "异常字段：%@";
+"config.restore_defaults" = "恢复同签名默认限制";
+
+/* Motor parameter detection header */
+"config.detection_warning" = "辨识会让电机通电；磁链和编码器辨识会转动电机。开始前请卸载负载并留出安全空间。";
+"config.motor_electrical_params" = "电机电气参数辨识";
+"config.detection_current" = "检测电流";
+"config.detection_current_unit" = "A";
+"config.open_loop_slope" = "开环斜率";
+"config.open_loop_slope_unit" = "ERPM/s";
+"config.low_duty_cycle" = "低占空比";
+"config.current_loop_time_constant" = "电流环时间常数";
+"config.time_constant_unit" = "µs";
+"config.detect_rl" = "辨识 R / L";
+"config.detect_flux_linkage" = "辨识磁链 λ";
+"config.apply_to_params" = "回填到参数";
+
+/* Common communication settings */
+"config.common_comm_settings" = "常用通信设置";
+
+/* Encoder detection */
+"config.encoder_param_detection" = "编码器参数辨识";
+"config.encoder_inverted_help" = "foc_encoder_inverted 是 FOC 换相校准参数，不是用户控制方向开关。单独翻转会破坏编码器角度与三相换相的对应关系，可能导致堵转、啸叫和剧烈振动。m_invert_direction 才是用户控制方向，但当前 Rotor 固件不接受直接修改。此处为严格对比试验开放两个独立开关；修改后还需点击右上角"写入电机"。";
+"config.start_encoder_detection" = "开始编码器辨识";
+"config.detection_in_progress" = "正在识别中…";
+"config.detection_hint" = ""回填"只修改待写参数；确认无误后再点右上角"写入电机"";
+
+/* Detection status messages */
+"config.detecting_rl" = "开始辨识 R / L？";
+"config.detect_rl_message" = "电机会通电并发出测试声，但正常情况下不会旋转。请先停止其他控制。";
+"config.start_detection" = "开始辨识";
+"config.detecting_flux" = "开始辨识磁链 λ？";
+"config.detect_flux_message" = "电机会开环旋转。请卸载负载、确保周围无人和障碍物。";
+"config.confirm_and_start" = "确认并开始";
+"config.detecting_encoder" = "开始编码器参数辨识？";
+"config.detect_encoder_message" = "电机会缓慢旋转。请卸载负载、确保周围无人和障碍物。";
+
+/* Motor results display */
+"config.motor_read_value" = "电机读取值";
+"config.new_detected_value" = "新辨识值";
+"config.result_separator" = "/";
+"config.resistance_unit" = "mΩ";
+"config.inductance_unit" = "µH";
+"config.flux_linkage_unit" = "mWb";
+"config.detection_failed" = "辨识失败：%@";
+"config.encoder_result_hint" = "Offset / Ratio / 方向：尚未辨识";
+
+/* CAN configuration */
+"config.can_id" = "CAN ID";
+"config.can_id_description" = "CAN 总线节点地址；多台电机必须使用不同 ID";
+"config.config_not_loaded_2" = "未读取应用配置";
+"config.can_id_help" = "controller_id，范围 0–255，用于在 CAN 总线上识别这台控制器。同一条 CAN 总线上的电机应使用不同 ID，否则报文会冲突。修改只影响待写的应用配置，仍需点右上角"写入电机"。";
+"config.can_status_level" = "CAN 状态帧级别";
+"config.can_status_level_description" = "决定周期广播哪几组状态帧；级别累加，出厂默认只发第 1 组";
+"config.disable" = "关闭";
+"config.can_status_level_disabled_help" = "send_can_status = 0：完全不广播状态帧";
+"config.can_status_rate" = "CAN 状态帧频率";
+"config.can_status_rate_description" = "send_can_status_rate_hz；帧数随级别成倍增加，注意总线带宽";
+"config.hertz_unit" = "Hz";
+"config.can_status_rate_help" = "每组状态帧的广播频率。级别 5 时每个周期会发 5 条帧，总线负载约等于 频率 × 级别 条/秒，请确认 CAN 带宽足够。修改只影响待写配置，仍需点右上角"写入电机"。";
+
+/* Direction parameters */
+"config.encoder_commutation_direction" = "编码器换相方向";
+"config.encoder_commutation_help" = "FOC 校准值；单独改变后严禁发送控制指令";
+"config.user_control_direction" = "用户控制方向";
+"config.user_control_direction_help" = "CAN / UART 指令与反馈的用户坐标方向";
+"config.reversed" = "反向";
+"config.forward" = "正向";
+"config.direction_state" = "%@ · 电机 %@ / 待写 %@";
+
+/* Status messages */
+"config.success_marker" = "成功";
+"config.signature_format" = "签名 0x%@";
+"config.field_separator" = "、";
+"config.identification_failed" = "识别失败：%@";
