@@ -37,6 +37,20 @@ final class ConfigModel: ObservableObject {
 
     var params: [Param] { session.activeMotorCodec.order }
 
+    /// 应用配置的参数表。
+    ///
+    /// 此前界面只硬编码显示了 CAN ID / 状态等级 / 状态速率三项，其余一律看不见——
+    /// 而 `can_mode`、`can_baud_rate` 这些**决定电机在总线上是否可见**的开关就在
+    /// 里面。排查"电机在 CAN 上完全沉默"时，最该看的值恰好是翻不到的那些。
+    var appParams: [Param] { session.appconfCodec.order }
+
+    /// 写应用配置里的任意参数。与 setParam 走同一道闸门。
+    func setAppParam(_ name: String, _ value: ParamValue) {
+        guard isConfigWritable, appConfigLoaded else { return }
+        appconf[name] = value
+        appConfigDirty = true
+    }
+
     /// 设备未登记（走兜底档案）——参数只读。
     var isProvisionalDevice: Bool { session.isProvisionalDevice }
 
@@ -87,7 +101,17 @@ final class ConfigModel: ObservableObject {
                     self.appconf = vals
                     self.appConfigLoaded = true
                     self.appConfigDirty = false
+                    // CAN 三项决定这台电机在总线上是否可见，且踩过坑：
+                    // 波特率与接收端不一致时症状是"完全沉默"，跟没接线一模一样。
+                    let baud = vals["can_baud_rate"]?.intValue
                     Log.config("appconf: read \(vals.count) params, signature \(Self.hex(sig))")
+                    Log.config("CAN: id=\(vals["controller_id"]?.intValue ?? -1)"
+                        + " status_level=\(vals["send_can_status"]?.intValue ?? -1)"
+                        + " rate=\(vals["send_can_status_rate_hz"]?.intValue ?? -1)Hz"
+                        + " baud_code=\(baud.map(String.init) ?? "?")"
+                        + " (\(Self.canBaudLabel(baud)))"
+                        + " mode=\(Self.canModeLabel(vals["can_mode"]?.intValue))"
+                        + " uart_permanent=\(vals["permanent_uart_enabled"]?.intValue ?? -1)")
                 }
             }
         }
@@ -208,6 +232,35 @@ final class ConfigModel: ObservableObject {
         // 表对不上时改的是错位字段；设备没登记时改的是没确认过量程的字段。
         guard isConfigWritable else { return }
         mcconf[name] = value; configDirty = true
+    }
+
+    /// VESC 的 can_baud_rate 是枚举下标，不是波特率数值本身。
+    /// 对照表来自上游 CAN_BAUD_x 顺序；接收端与它不一致就一帧也收不到。
+    private static func canBaudLabel(_ code: Int?) -> String {
+        switch code {
+        case 0: return "125 kbit"
+        case 1: return "250 kbit"
+        case 2: return "500 kbit"
+        case 3: return "1 Mbit"
+        case 4: return "10 kbit"
+        case 5: return "20 kbit"
+        case 6: return "50 kbit"
+        case 7: return "75 kbit"
+        case 8: return "100 kbit"
+        default: return "unknown"
+        }
+    }
+
+    /// can_mode 决定这块控制器在总线上说哪种"语言"。不是 VESC 模式时，
+    /// 它照样通电、照样应答 UART，但一帧 VESC 格式的周期帧都不会发——
+    /// 在接收端看就是彻底沉默，和没接线一模一样。
+    private static func canModeLabel(_ code: Int?) -> String {
+        switch code {
+        case 0: return "VESC"
+        case 1: return "UAVCAN"
+        case 2: return "CommBridge"
+        default: return "unknown(\(code.map(String.init) ?? "?"))"
+        }
     }
 
     private static func hex(_ v: UInt32) -> String {

@@ -56,6 +56,16 @@ struct ConfigView: View {
                             ForEach(params, id: \.name) { p in ParamRow(param: p) }
                         }
                     }
+                    // 应用配置。以前只有三项被硬编码显示，其余（can_mode、
+                    // can_baud_rate、permanent_uart_enabled …）在界面上完全够不着——
+                    // 而排查"电机在总线上不见了"时，要看的恰好是这些。
+                    if !appParams.isEmpty {
+                        Section(L10n.t(L10n.Config.applicationParams)) {
+                            ForEach(appParams, id: \.name) { p in
+                                ParamRow(param: p, table: .application)
+                            }
+                        }
+                    }
                 }.listStyle(.inset)
             }
         }
@@ -109,6 +119,17 @@ struct ConfigView: View {
     }
 
     // 按名字前缀分组
+    /// 应用配置：搜索时按名字过滤；不搜索时整表列出（它只有一百多项，
+    /// 不像电机表那样需要分类）。
+    private var appParams: [Param] {
+        guard config.appConfigLoaded else { return [] }
+        guard !search.isEmpty else { return config.appParams }
+        return config.appParams.filter {
+            $0.name.localizedCaseInsensitiveContains(search)
+                || $0.longName.localizedCaseInsensitiveContains(search)
+        }
+    }
+
     private var categories: [(String, [Param])] {
         let filtered = config.params.filter {
             let matches = search.isEmpty || $0.name.localizedCaseInsensitiveContains(search)
@@ -585,9 +606,15 @@ private enum DetectionConfirmation: String, Identifiable {
     var id: String { rawValue }
 }
 
+/// 参数属于哪张表。两张表各有独立的签名与写入命令。
+enum ConfigTable { case motor, application }
+
 struct ParamRow: View {
     @EnvironmentObject var config: ConfigModel
     let param: Param
+    /// 这一行属于电机配置还是应用配置。两张表字段名可能重名，
+    /// 所以必须显式携带归属，不能靠查表猜。
+    var table: ConfigTable = .motor
 
     var body: some View {
         HStack {
@@ -621,11 +648,20 @@ struct ParamRow: View {
     }
 
     private var intBinding: Binding<Int> {
-        Binding(get: { config.mcconf[param.name]?.intValue ?? 0 },
-                set: { config.setParam(param.name, .int($0)) })
+        Binding(get: { values[param.name]?.intValue ?? 0 },
+                set: { write(.int($0)) })
     }
     private var doubleBinding: Binding<Double> {
-        Binding(get: { config.mcconf[param.name]?.doubleValue ?? 0 },
-                set: { config.setParam(param.name, .double($0)) })
+        Binding(get: { values[param.name]?.doubleValue ?? 0 },
+                set: { write(.double($0)) })
+    }
+    private var values: [String: ParamValue] {
+        table == .motor ? config.mcconf : config.appconf
+    }
+    private func write(_ v: ParamValue) {
+        switch table {
+        case .motor: config.setParam(param.name, v)
+        case .application: config.setAppParam(param.name, v)
+        }
     }
 }

@@ -94,7 +94,9 @@ enum Acceptance {
         report.check("parameter table matches this device (schema signature)",
                      model.config.configSchemaTrusted,
                      detail: "device \(model.config.deviceSchemaSignatureHex) vs bundled \(model.config.expectedSchemaSignatureHex)")
-        print("CAN         ID \(model.config.canID) · send_can_status \(model.config.canStatusLevel) · \(model.config.canStatusRateHz) Hz")
+        let baudCode = model.config.appconf["can_baud_rate"]?.intValue
+        print("CAN         ID \(model.config.canID) · status level \(model.config.canStatusLevel)"
+              + " · \(model.config.canStatusRateHz) Hz · baud code \(baudCode.map(String.init) ?? "?")")
 
         let health = model.config.outputConfigurationHealth
         if !health.isOutputEnabled {

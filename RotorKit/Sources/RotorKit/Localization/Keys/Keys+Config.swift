@@ -179,6 +179,9 @@ extension L10n {
             "config.unknown_device_write_blocked",
             "Write blocked: %@ is not a registered device. Reading is allowed; writing is not, until it has a profile.")
 
+        public static let applicationParams = L10nKey(
+            "config.application_params", "Application configuration (appconf)")
+
         public static let all: [L10nKey] = [
             configNotLoaded, configLoadedDescription, commonAndDetection, commonParams, searchPlaceholder,
             pendingChanges, refreshConfig, writeToMotor,
@@ -197,6 +200,7 @@ extension L10n {
             encoderCommutationDirection, encoderCommutationHelp, userControlDirection, userControlDirectionHelp,
             reversed, forward, directionState,
             successMarker, signatureFormat, fieldSeparator, identificationFailed,
+            applicationParams,
             schemaMismatchTitle, schemaMismatchBody, schemaMismatchWriteBlocked,
             unknownDeviceTitle, unknownDeviceBody, unknownDeviceWriteBlocked,
         ]

@@ -378,3 +378,4 @@
 "device.state_unknown" = "未知";
 "device.what_is_missing" = "要为这台设备转正";
 "device.what_is_missing_detail" = "握手已经给出身份、协议族、参数表签名与项数。仍需从规格书获取：极对数、减速比、连续与峰值电流、编码器类型。这是刻意的政策——电机在真要用它的时候才登记，而不是提前；一条未经验证的登记会悄悄解除写入闸门。";
+"config.application_params" = "应用配置（appconf）";
