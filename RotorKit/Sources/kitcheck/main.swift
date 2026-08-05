@@ -1620,14 +1620,44 @@ let identities = DeviceRegistry.all.map {
     DeviceIdentity(hardwareName: "CMESC_AK80_9_SW_\($0.hardwareMatch)",
                    firmwareMajor: 5, firmwareMinor: 1, wireProtocol: $0.wireProtocol)
 } + [customIdentity, stockIdentity]
+// 调**真实现**，不复刻。复刻出来的挑选逻辑只能验证复制品本身——
+// 这里原来正是复刻的，于是 DeviceRegistry 改了挑选规则这条断言也照样绿。
 func pick(_ pool: [DeviceProfile], _ id: DeviceIdentity) -> String {
-    let hits = pool.filter { $0.matches(id) }
-    return (hits.max { $0.hardwareMatch.count < $1.hardwareMatch.count })?.id ?? "(fallback)"
+    DeviceRegistry.profile(for: id, in: pool).id
 }
 let forward = identities.map { pick(DeviceRegistry.all, $0) }
 let reversed = identities.map { pick(DeviceRegistry.all.reversed(), $0) }
 check("识别结果与注册表顺序无关（正序 vs 逆序逐条一致）",
       forward == reversed, "\(forward) vs \(reversed)")
+// 自制 V2.1 固件把身份串改成 CMESC_AK80_9_SC_V2.1（SW→SC，等长）。V2 档案匹配的是
+// "AK80_9"，改名不该影响识别——但这件事**只有一条断言能保证**：哪天有人把 V2 档案
+// 的匹配串收紧成 "SW_V2"，刷了自制固件的电机就会静默掉进只读兜底，而只读兜底
+// 恰好也能连、也能读，症状是"写入按钮莫名其妙灰了"，极难联想到是改名导致的。
+let v2CustomIdentity = DeviceIdentity(hardwareName: "CMESC_AK80_9_SC_V2.1",
+                                      firmwareMajor: 3, firmwareMinor: 0, wireProtocol: .vesc)
+check("自制 V2.1 固件（SC_V2.1）仍被认出，不掉进只读兜底",
+      DeviceRegistry.profile(for: v2CustomIdentity).id == "ak80-9.v2",
+      DeviceRegistry.profile(for: v2CustomIdentity).id)
+
+// 长度打平时也必须与顺序无关。V2 档案的 "AK80_9" 是 7 字符，将来 V2.1 自制
+// 固件的 "SC_V2.1" 同样 7 字符——那时若还靠 max 的"最后一个胜"，认哪条就取决于
+// 谁写在数组后面。这条断言现在就把并列情形钉死，免得等真出问题才发现。
+let tieA = DeviceProfile(id: "tie.aaa", displayName: "tie A", wireProtocol: .v3,
+                         telemetryLayout: .v3, configSchema: .v3, capabilities: [],
+                         makeUploadStrategy: { IAPRawUpload() },
+                         matches: { $0.hardwareName.contains("TIEXXXX") },
+                         hardwareMatch: "TIEXXXX")
+let tieB = DeviceProfile(id: "tie.bbb", displayName: "tie B", wireProtocol: .v3,
+                         telemetryLayout: .v3, configSchema: .v3, capabilities: [],
+                         makeUploadStrategy: { IAPRawUpload() },
+                         matches: { $0.hardwareName.contains("TIEXXXX") },
+                         hardwareMatch: "TIEYYYY")   // 与 A 等长
+let tieIdentity = DeviceIdentity(hardwareName: "CMESC_TIEXXXX",
+                                 firmwareMajor: 5, firmwareMinor: 1, wireProtocol: .v3)
+check("hardwareMatch 长度打平时识别仍与顺序无关",
+      pick([tieA, tieB], tieIdentity) == pick([tieB, tieA], tieIdentity),
+      "\(pick([tieA, tieB], tieIdentity)) vs \(pick([tieB, tieA], tieIdentity))")
+
 check("每条已登记档案都能认出自己",
       DeviceRegistry.all.allSatisfy { p in
           !p.hardwareMatch.isEmpty && pick(DeviceRegistry.all,

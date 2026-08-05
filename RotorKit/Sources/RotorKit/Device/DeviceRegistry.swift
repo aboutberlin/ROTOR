@@ -18,13 +18,29 @@ public enum DeviceRegistry {
 
     /// 取**最具体**的匹配档案；都不匹配则用兜底。
     ///
-    /// 不是"第一个匹配的胜"——那会把正确性寄托在数组顺序上。`"V3.4C"` 同样包含
+    /// 不是"第一个匹配的胜"——那会把正确性寄托在数组顺序上。`"SC_V3.4"` 同样包含
     /// `"V3.4"`，两条档案会同时匹配自制固件；按最长模式选，谁写在前面都一样。
     /// kitcheck 里有一条打乱数组后结果必须不变的断言钉住这个性质。
     public static func profile(for identity: DeviceIdentity) -> DeviceProfile {
-        let candidates = all.filter { $0.matches(identity) }
-        return candidates.max { $0.hardwareMatch.count < $1.hardwareMatch.count }
-            ?? genericVesc(for: identity)
+        profile(for: identity, in: all)
+    }
+
+    /// 同上，但可以指定候选池——**给测试用的，不要在应用代码里调**。
+    ///
+    /// 存在的理由：断言"识别与注册表顺序无关"必须打乱池子再问一次，而如果测试
+    /// 自己复刻一份挑选逻辑，它验证的就是那份复制品，不是真实现。
+    /// （kitcheck 里原本正是复刻的，本次改动一并收敛。）
+    public static func profile(for identity: DeviceIdentity,
+                               in pool: [DeviceProfile]) -> DeviceProfile {
+        let candidates = pool.filter { $0.matches(identity) }
+        // 长度打平时按 id 再排一次，否则结果又会依赖数组顺序。
+        // 这不是假想：V2 档案匹配 "AK80_9"（7 字符），而 V2.1 自制固件的
+        // "SC_V2.1" 同样是 7 字符——一旦登记就会打平。
+        return candidates.max { a, b in
+            a.hardwareMatch.count != b.hardwareMatch.count
+                ? a.hardwareMatch.count < b.hardwareMatch.count
+                : a.id > b.id
+        } ?? genericVesc(for: identity)
     }
 
     // MARK: - 已登记设备
