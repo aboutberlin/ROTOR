@@ -102,7 +102,8 @@ public enum RotorV3Comm: Int {
 /// Windows Rotor V3.1.3 固件上传器使用的 IAP 暂存区线路命令。
 ///
 /// 官方 `Commands` 层对大镜像（> 250000 B）选择逻辑命令 0x66/0x2A，
-/// 对中等镜像（> 2800 B）选择 0x67/0x2B。同一命令族里的其他 V3 指令已经使用最终线路编号，因此这里不能再做 `+65`。应用先用
+/// 对中等镜像（> 2800 B）选择 0x67/0x2B。反汇编中同一个 Commands 类的
+/// 其他 V3 指令已经使用最终线路编号，因此这里不能再做 `+65`。应用先用
 /// 0x42 进入 IAP，随后用这些命令写入暂存区。
 public enum RotorV3FirmwareUploadCommand {
     public static let eraseLarge = 0x66

@@ -278,16 +278,17 @@ final class ConfigModel: ObservableObject {
         appConfigDirty = true
     }
 
-    /// `send_can_status`：决定 CAN 上周期广播哪几组状态帧。
-    /// 出厂默认是 1，也就是只发 STATUS_1，后面四组全是关的。
+    /// `send_can_status`：**在本固件的 VESC 模式下是死参数**，只保留读取用于验收记录。
+    ///
+    /// 它只被 UAVCAN 线程读，且仅当 `can_mode == 1`，读到也只当非零开关用；
+    /// `can_status_thread` 从不读它。因此本工具**不提供写入入口**——
+    /// 一个改了不生效的旋钮比没有旋钮更糟。详见
+    /// `reverse-engineering/fw-mod/findings/appconf-xrefs.md` §4.5。
     var canStatusLevel: Int { appconf["send_can_status"]?.intValue ?? 0 }
-    var canStatusRateHz: Int { appconf["send_can_status_rate_hz"]?.intValue ?? 0 }
 
-    func setCANStatusLevel(_ value: Int) {
-        guard appConfigLoaded else { return }
-        appconf["send_can_status"] = .int(min(max(value, 0), CANStatusLevel.maxRawValue))
-        appConfigDirty = true
-    }
+    /// 与上一条相反，速率是**活的**：`can_status_thread` 用 `10000/rate` 算睡眠 tick。
+    /// 下限钳到 1 是因为固件在 `udiv` 前没有查 0。
+    var canStatusRateHz: Int { appconf["send_can_status_rate_hz"]?.intValue ?? 0 }
 
     func setCANStatusRateHz(_ value: Int) {
         guard appConfigLoaded else { return }

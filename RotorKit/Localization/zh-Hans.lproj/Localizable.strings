@@ -3,23 +3,6 @@
    英文原文是单一真源，见 Sources/RotorKit/Localization/Keys/。 */
 
 /* can_status */
-"can_status.box_tooltip_cumulative" = "级别累加，选这一级会同时开启前面所有组。";
-"can_status.box_tooltip_level" = "级别 %@：广播以下 %@ 组状态帧";
-"can_status.box_tooltip_write" = "Changes only affect pending configuration; click 'Write to Motor' in the top-right to apply.";
-"can_status.level_1_title" = "转速 / 电流";
-"can_status.level_2_title" = "安时";
-"can_status.level_3_title" = "瓦时";
-"can_status.level_4_title" = "温度 / 位置";
-"can_status.level_5_title" = "里程 / 电压";
-"can_status.status_1_detail" = "STATUS_1：ERPM、电机电流、占空比";
-"can_status.status_2_detail" = "STATUS_2：安时消耗、安时回充";
-"can_status.status_3_detail" = "STATUS_3：瓦时消耗、瓦时回充";
-"can_status.status_4_detail" = "STATUS_4：MOS 温度、电机温度、输入电流、PID 位置";
-"can_status.status_5_detail" = "STATUS_5：里程计、输入电压";
-"can_status.tooltip_default" = "出厂默认为 1，因此温度、输入电流、位置、里程、输入电压默认都收不到。";
-"can_status.tooltip_intro" = "send_can_status：CAN 周期状态帧的开关，级别累加。";
-"can_status.tooltip_note" = "调高不需要改固件，只是一个应用配置字节。";
-"can_status.tooltip_off" = "0 完全关闭，不广播任何状态帧。";
 
 /* config */
 "config.abnormal_fields" = "异常字段：%@";
@@ -27,11 +10,8 @@
 "config.can_id" = "CAN ID";
 "config.can_id_description" = "CAN 总线节点地址；多台电机必须使用不同 ID";
 "config.can_id_help" = "controller_id，范围 0–255，用于在 CAN 总线上识别这台控制器。同一条 CAN 总线上的电机应使用不同 ID，否则报文会冲突。修改只影响待写的应用配置，仍需点右上角“写入电机”。";
-"config.can_status_level" = "CAN 状态帧级别";
-"config.can_status_level_description" = "决定周期广播哪几组状态帧；级别累加，出厂默认只发第 1 组";
-"config.can_status_level_disabled_help" = "send_can_status = 0：完全不广播状态帧";
 "config.can_status_rate" = "CAN 状态帧频率";
-"config.can_status_rate_description" = "send_can_status_rate_hz；帧数随级别成倍增加，注意总线带宽";
+"config.can_status_rate_description" = "send_can_status_rate_hz；电机周期状态帧的广播频率，不能写 0";
 "config.can_status_rate_help" = "每组状态帧的广播频率。级别 5 时每个周期会发 5 条帧，总线负载约等于 频率 × 级别 条/秒，请确认 CAN 带宽足够。修改只影响待写配置，仍需点右上角“写入电机”。";
 "config.category_bldc_hall" = "BLDC/Hall";
 "config.category_current" = "电流控制";
@@ -64,7 +44,6 @@
 "config.detection_in_progress" = "正在识别中…";
 "config.detection_warning" = "辨识会让电机通电；磁链和编码器辨识会转动电机。开始前请卸载负载并留出安全空间。";
 "config.direction_state" = "%@ · 电机 %@ / 待写 %@";
-"config.disable" = "关闭";
 "config.encoder_commutation_direction" = "编码器换相方向";
 "config.encoder_commutation_help" = "FOC 校准值；单独改变后严禁发送控制指令";
 "config.encoder_inverted_help" = "foc_encoder_inverted 是 FOC 换相校准参数，不是用户控制方向开关。单独翻转会破坏编码器角度与三相换相的对应关系，可能导致堵转、啸叫和剧烈振动。m_invert_direction 才是用户控制方向，但当前 Rotor 固件不接受直接修改。此处为严格对比试验开放两个独立开关；修改后还需点击右上角\"写入电机\"。";
@@ -379,3 +358,7 @@
 "device.what_is_missing" = "要为这台设备转正";
 "device.what_is_missing_detail" = "握手已经给出身份、协议族、参数表签名与项数。仍需从规格书获取：极对数、减速比、连续与峰值电流、编码器类型。这是刻意的政策——电机在真要用它的时候才登记，而不是提前；一条未经验证的登记会悄悄解除写入闸门。";
 "config.application_params" = "应用配置（appconf）";
+"config.direction_single_switch_title" = "方向（一个开关，两个名字）";
+"config.direction_single_switch_body" = "固件把它存成两个字段，却用同一个字节写入两处，而且 m_invert_direction 从不从线上回读。两者无法独立设置：改任意一个，两个都变。五份真机参数备份确认它们从未不同过。";
+"config.direction_do_not_use" = "不要用它来反转电机方向。它是 FOC 换相标定值——翻转会导致堵转啸叫。请在你自己的控制代码里取反。";
+"config.direction_incomplete" = "它也不会翻转全部：转速、电流、占空比、里程计跟随此标志，而位置是写死的、不跟随。在这里改动会让位置与其余量互相矛盾。";

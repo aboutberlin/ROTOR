@@ -12,9 +12,6 @@ public enum Capability: String, CaseIterable, Sendable {
     /// 文本终端通道（`COMM_TERMINAL_CMD` / `COMM_PRINT`）。
     case terminalChannel
 
-    /// CAN 周期状态帧分级（`send_can_status`）。
-    case canStatusLevels
-
     /// 固件上传走 bootloader 的 IAP 原始帧；否则走擦除 + 分块暂存区。
     case iapFirmwareUpload
 

@@ -9,7 +9,6 @@ import Foundation
 public enum L10nKeyRegistry {
     public static let all: [L10nKey] =
         L10n.Tab.all
-        + L10n.CANStatus.all
         + L10n.Connection.all
         + L10n.Control.all
         + L10n.Config.all

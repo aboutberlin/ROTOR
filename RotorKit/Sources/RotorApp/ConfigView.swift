@@ -347,81 +347,22 @@ private struct ParameterIdentificationView: View {
 .help(L10n.t(L10n.Config.canIDHelp))
     }
 
-    private var canStatusBinding: Binding<Int> {
-        Binding(get: { config.canStatusLevel }, set: { config.setCANStatusLevel($0) })
-    }
-
     private var canStatusRateBinding: Binding<Int> {
         Binding(get: { config.canStatusRateHz }, set: { config.setCANStatusRateHz($0) })
     }
 
-    /// 级别累加，所以第 N 格被选中时，1..N 全部点亮——把“累加”画出来。
-    private func canLevelBox(_ level: CANStatusLevel) -> some View {
-        let selected = config.canStatusLevel
-        let lit = selected >= level.rawValue
-        let isEdge = selected == level.rawValue
-        return Button {
-            config.setCANStatusLevel(level.rawValue)
-        } label: {
-            VStack(spacing: 2) {
-                Text("\(level.rawValue)")
-                    .font(.headline)
-                    .foregroundStyle(lit ? Color.accentColor : .secondary)
-                Text(level.boxTitle)
-                    .font(.caption2)
-                    .foregroundStyle(lit ? .primary : .secondary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
-            }
-            .frame(width: 92, height: 46)
-            .background(
-                RoundedRectangle(cornerRadius: 7)
-                    .fill(lit ? Color.accentColor.opacity(0.14) : Color.gray.opacity(0.08))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 7)
-                    .strokeBorder(isEdge ? Color.accentColor : Color.gray.opacity(0.25),
-                                  lineWidth: isEdge ? 2 : 1)
-            )
-        }
-        .buttonStyle(.plain)
-        .help(level.boxTooltip)
-    }
-
+    /// 这里曾经有一组「CAN 状态帧分级」按钮（`send_can_status` 1..5）。**已删除，别加回来。**
+    ///
+    /// 那个字段在本固件的 VESC 模式下是**死参数**：反汇编证明 `can_status_thread`
+    /// 只读 `controller_id`、`send_can_status_rate_hz`、`can_mode`，从不读分级；
+    /// 上游 `comm_can_send_status1..5` 的发送代码已被厂商整体编译掉，镜像里不存在。
+    /// 写 5 进去会被接受、会持久化，然后总线上仍然只有 `0x29`。
+    /// 见 `reverse-engineering/fw-mod/findings/appconf-xrefs.md` §4.5 与
+    /// `findings/02-tx-and-status-remnants.md` §0——这正是我们不得不改固件的原因。
+    ///
+    /// 下面这条**速率**是活的：`udiv 10000/rate` 决定线程睡眠 tick，且不能写 0。
     private var canStatusRow: some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack(spacing: 12) {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(L10n.t(L10n.Config.canStatusLevel))
-                        .font(.callout.weight(.medium))
-                    Text(L10n.t(L10n.Config.canStatusLevelDescription))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-                Spacer()
-                if !config.appConfigLoaded {
-                    Text(L10n.t(L10n.Config.configNotLoaded2))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-            }
-
-            if config.appConfigLoaded {
-                HStack(spacing: 6) {
-                    ForEach(CANStatusLevel.allCases) { level in
-                        canLevelBox(level)
-                    }
-                    Button(L10n.t(L10n.Config.disable)) {
-                        config.setCANStatusLevel(CANStatusLevel.disabledRawValue)
-                    }
-                    .buttonStyle(.plain)
-                    .font(.caption)
-                    .foregroundStyle(config.canStatusLevel == 0 ? Color.orange : .secondary)
-                    .padding(.leading, 6)
-                    .help(L10n.t(L10n.Config.canStatusLevelDisabledHelp))
-                }
-            }
-
             if config.appConfigLoaded {
                 HStack(spacing: 12) {
                     VStack(alignment: .leading, spacing: 2) {
@@ -440,10 +381,13 @@ private struct ParameterIdentificationView: View {
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
-.help(L10n.t(L10n.Config.canStatusRateHelp))
+                .help(L10n.t(L10n.Config.canStatusRateHelp))
+            } else {
+                Text(L10n.t(L10n.Config.configNotLoaded2))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
         }
-        .help(CANStatusLevel.tooltip)
     }
 
     private var motorResultRow: some View {
@@ -535,19 +479,25 @@ private struct ParameterIdentificationView: View {
         .font(.callout)
     }
 
+    /// 方向只有一个开关，尽管固件把它存成两个字段。
+    ///
+    /// 反汇编确认：反序列化器用**同一个线上字节**写 `foc_encoder_inverted` 与
+    /// `m_invert_direction` 两处，且从不回读后者——它在线上的那个字节一次都没被加载。
+    /// 五份真机参数备份里两者从未不同过。此前界面画成两个独立开关，各带各的说明，
+    /// **那是在说假话**：动任意一个，两个都变。
     private var directionParameterControls: some View {
         VStack(alignment: .leading, spacing: 8) {
             directionControlRow(
-                title: L10n.t(L10n.Config.encoderCommutationDirection),
+                title: L10n.t(L10n.Config.directionSingleSwitchTitle),
                 parameter: "foc_encoder_inverted",
-                detail: L10n.t(L10n.Config.encoderCommutationHelp),
+                detail: L10n.t(L10n.Config.directionSingleSwitchBody),
                 dangerous: true)
-            Divider()
-            directionControlRow(
-                title: L10n.t(L10n.Config.userControlDirection),
-                parameter: "m_invert_direction",
-                detail: L10n.t(L10n.Config.userControlDirectionHelp),
-                dangerous: false)
+            Label(L10n.t(L10n.Config.directionDoNotUse), systemImage: "exclamationmark.triangle.fill")
+                .font(.caption).foregroundStyle(.red)
+                .fixedSize(horizontal: false, vertical: true)
+            Text(L10n.t(L10n.Config.directionIncomplete))
+                .font(.caption).foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
 

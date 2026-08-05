@@ -36,6 +36,13 @@ public struct DeviceProfile: Sendable {
     public let makeUploadStrategy: @Sendable () -> FirmwareUploadStrategy
     /// 依据握手回包判断这条档案是否适用。
     public let matches: @Sendable (_ identity: DeviceIdentity) -> Bool
+    public let hardwareMatch: String
+    /// 这条档案匹配硬件串所用的**模式**，仅用于比较具体度。
+    ///
+    /// 存在的理由：`"V3.4C"` 同样包含 `"V3.4"`，所以两条档案会同时匹配自制固件。
+    /// 若按"第一个匹配的胜"来选，正确性就寄托在数组顺序上——而顺序会被人无意改动，
+    /// 且改动后不报错，只是默默认错设备。改为**最长模式胜**：具体度写在数据里，
+    /// 与顺序无关。
 
     public init(
         id: String,
@@ -46,7 +53,8 @@ public struct DeviceProfile: Sendable {
         isProvisional: Bool = false,
         capabilities: Set<Capability>,
         makeUploadStrategy: @escaping @Sendable () -> FirmwareUploadStrategy,
-        matches: @escaping @Sendable (DeviceIdentity) -> Bool
+        matches: @escaping @Sendable (DeviceIdentity) -> Bool,
+        hardwareMatch: String = ""
     ) {
         self.id = id
         self.displayName = displayName
@@ -57,6 +65,7 @@ public struct DeviceProfile: Sendable {
         self.capabilities = capabilities
         self.makeUploadStrategy = makeUploadStrategy
         self.matches = matches
+        self.hardwareMatch = hardwareMatch
     }
 
     public func supports(_ capability: Capability) -> Bool {

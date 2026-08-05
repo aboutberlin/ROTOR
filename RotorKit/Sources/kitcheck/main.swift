@@ -307,19 +307,55 @@ if let probeIndex = CommandLine.arguments.firstIndex(of: "--probe"),
         }
         let digest = SHA256.hash(data: image).map { String(format: "%02x", $0) }.joined()
         let officialV34SHA = "5dbda5eac4743854b2b26f55f5ade37cfd95497e727048f46c96426cf0a8bbd1"
-        guard image.count == 393_208, digest == officialV34SHA else {
-            print("  ❌ 拒绝刷写：不是已登记的 AK80-9 V3.4 官方镜像")
-            print("     size \(image.count), SHA-256 \(digest)")
-            exit(41)
+        // 自改镜像走单独一条通道：官方 SHA 那道闸是给"我以为在刷官方固件"的人用的，
+        // 不该为了自改而拆掉。这里要求显式声明，并加一组自改镜像专属的检查。
+        let isModified = CommandLine.arguments.contains("--accept-modified-image")
+        if isModified {
+            print("  ⚠️ 自改镜像模式：跳过官方 SHA 校验，改用结构与槽尾约束")
+            print("     SHA-256 \(digest)")
+            guard image.count == 393_208 else {
+                print("  ❌ 拒绝刷写：长度 \(image.count) ≠ 393208（Servo 槽 APP_MAX_SIZE）")
+                exit(41)
+            }
+            // 固件在 main() 里对整份镜像做 CRC-32 自校验，失败即闪灯死循环、应用永不启动。
+            // 它靠"标志字为擦除态"自愈，所以这 8 字节必须原样保持 0xFF。
+            let tail = Array(image[0x5FFF0..<0x5FFF8])
+            guard tail.allSatisfy({ $0 == 0xFF }) else {
+                print("  ❌ 拒绝刷写：槽尾记账位 [0x5FFF0,0x5FFF8) 不是 0xFF —— "
+                      + "CRC 自愈会失效，刷完必然闪灯死循环")
+                print("     实际 \(tail.map { String(format: "%02X", $0) }.joined(separator: " "))")
+                exit(41)
+            }
+            // Cortex-M 向量表结构：SP 落在 SRAM，复位向量落在本槽内且带 Thumb 位。
+            let sp = image.withUnsafeBytes { $0.load(fromByteOffset: 0, as: UInt32.self) }
+            let reset = image.withUnsafeBytes { $0.load(fromByteOffset: 4, as: UInt32.self) }
+            guard (0x2000_0000...0x2003_0000).contains(sp),
+                  (0x0806_0000...0x080B_FFFF).contains(reset & ~1), (reset & 1) == 1 else {
+                print("  ❌ 拒绝刷写：向量表不合理 SP=\(String(format: "0x%08X", sp)) "
+                      + "Reset=\(String(format: "0x%08X", reset))")
+                exit(41)
+            }
+            print("  ✅ 结构检查通过：SP=\(String(format: "0x%08X", sp)) "
+                  + "Reset=\(String(format: "0x%08X", reset)) 槽尾 0xFF")
+        } else {
+            guard image.count == 393_208, digest == officialV34SHA else {
+                print("  ❌ 拒绝刷写：不是已登记的 AK80-9 V3.4 官方镜像")
+                print("     size \(image.count), SHA-256 \(digest)")
+                print("     若这是你自己改的镜像，加 --accept-modified-image")
+                exit(41)
+            }
         }
         let hardware = fw.hw.uppercased()
         guard client.wireProtocol == .v3,
-              hardware.contains("CMESC_AK80_9_SW_V3") else {
+              // 自制固件把身份串等长改成了 `…_SC_V3.4`（SW → SC），两者都要认。
+              hardware.contains("CMESC_AK80_9_SW_V3")
+                || hardware.contains("CMESC_AK80_9_SC_V3") else {
             print("  ❌ 拒绝刷写：当前不是 AK80-9 V3 Servo 分支（\(fw.hw)）")
             exit(42)
         }
 
-        print("  ✅ 精确匹配：\(fw.hw) → 官方 AK80-9 V3.4")
+        print(isModified ? "  ⚠️ 将刷入自改镜像到 \(fw.hw)"
+                          : "  ✅ 精确匹配：\(fw.hw) → 官方 AK80-9 V3.4")
         client.wireTrace = { direction, bytes in
             // 固件路径只打印短控制帧；固件分块 TX 很长，保留首尾和总长度。
             let hex: String
@@ -437,7 +473,9 @@ if let probeIndex = CommandLine.arguments.firstIndex(of: "--probe"),
             exit(48)
         }
         print("  ✅ 重连：FW \(after.major).\(after.minor) HW \(after.hw)")
-        guard after.hw.uppercased().contains("CMESC_AK80_9_SW_V3.4") else {
+        let hwAfter = after.hw.uppercased()
+        guard hwAfter.contains("CMESC_AK80_9_SW_V3.4")
+                || hwAfter.contains("CMESC_AK80_9_SC_V3.4") else {
             print("  ❌ 重连成功，但硬件字符串不是 V3.4")
             exit(49)
         }
@@ -666,6 +704,24 @@ if let probeIndex = CommandLine.arguments.firstIndex(of: "--probe"),
     }
 
     // 只读终端命令。hw_status 会打印 OPTR/RDPROT，是判断能否用 SWD 救砖的前提。
+    // 读单个 appconf 字段。排查 CAN 可见性时反复需要——决定电机在总线上
+    // 是否可见的那几个开关都在 appconf 里，而它们此前只能靠整包读回来自己数偏移。
+    if let i = CommandLine.arguments.firstIndex(of: "--appconf-get"),
+       CommandLine.arguments.indices.contains(i + 1) {
+        let name = CommandLine.arguments[i + 1]
+        guard let (sig, values) = client.getAppconf() else {
+            print("  ❌ appconf 读取失败"); exit(46)
+        }
+        print("  appconf 签名 0x\(String(format: "%08X", sig))，\(values.count) 项")
+        let matches = values.keys.filter { $0.localizedCaseInsensitiveContains(name) }.sorted()
+        if matches.isEmpty { print("  ❌ 没有匹配 \"\(name)\" 的字段"); exit(46) }
+        for k in matches {
+            let v = values[k]!
+            print("  \(k) = \(v.intValue)  (0x\(String(format: "%X", v.intValue)))  double=\(v.doubleValue)")
+        }
+        exit(0)
+    }
+
     if let termIndex = CommandLine.arguments.firstIndex(of: "--terminal") {
         guard CommandLine.arguments.indices.contains(termIndex + 1) else {
             print("  ❌ 用法：--terminal \"<命令>\"    例：--terminal hw_status")
@@ -1542,6 +1598,43 @@ for language in L10n.Language.allCases where language != .english {
 }
 check("各语言译文的占位符数量与英文一致", drifted.isEmpty,
       drifted.prefix(4).joined(separator: ", "))
+
+// 自制固件的档案必须排在官方 V3.4 之前：注册表取第一个匹配，而 "V3.4C" 同样
+// 包含 "V3.4"。顺序写反了，刷了自制固件的电机会被认成官方的——而那正是加这条
+// 档案要解决的问题。
+let customIdentity = DeviceIdentity(hardwareName: "CMESC_AK80_9_SC_V3.4",
+                                    firmwareMajor: 5, firmwareMinor: 1, wireProtocol: .v3)
+let stockIdentity = DeviceIdentity(hardwareName: "CMESC_AK80_9_SW_V3.4",
+                                   firmwareMajor: 5, firmwareMinor: 1, wireProtocol: .v3)
+check("自制固件识别为 v3.4custom",
+      DeviceRegistry.profile(for: customIdentity).id == "ak80-9.v3.4custom",
+      DeviceRegistry.profile(for: customIdentity).id)
+check("官方固件仍识别为 v3.4",
+      DeviceRegistry.profile(for: stockIdentity).id == "ak80-9.v3.4",
+      DeviceRegistry.profile(for: stockIdentity).id)
+// 顺序**必须**无关紧要。之前的实现是"第一个匹配的胜"，于是正确性寄托在数组
+// 顺序上——而顺序会被人无意改动，且改动后不报错，只是默默认错设备。
+// 现在按最长模式选，这条断言把"顺序无关"变成可执行的性质：把注册表反过来，
+// 每一条身份的识别结果必须逐条不变。
+let identities = DeviceRegistry.all.map {
+    DeviceIdentity(hardwareName: "CMESC_AK80_9_SW_\($0.hardwareMatch)",
+                   firmwareMajor: 5, firmwareMinor: 1, wireProtocol: $0.wireProtocol)
+} + [customIdentity, stockIdentity]
+func pick(_ pool: [DeviceProfile], _ id: DeviceIdentity) -> String {
+    let hits = pool.filter { $0.matches(id) }
+    return (hits.max { $0.hardwareMatch.count < $1.hardwareMatch.count })?.id ?? "(fallback)"
+}
+let forward = identities.map { pick(DeviceRegistry.all, $0) }
+let reversed = identities.map { pick(DeviceRegistry.all.reversed(), $0) }
+check("识别结果与注册表顺序无关（正序 vs 逆序逐条一致）",
+      forward == reversed, "\(forward) vs \(reversed)")
+check("每条已登记档案都能认出自己",
+      DeviceRegistry.all.allSatisfy { p in
+          !p.hardwareMatch.isEmpty && pick(DeviceRegistry.all,
+              DeviceIdentity(hardwareName: "CMESC_AK80_9_SW_\(p.hardwareMatch)",
+                             firmwareMajor: 5, firmwareMinor: 1,
+                             wireProtocol: p.wireProtocol)) == p.id
+      }, "")
 
 print("== 本地化完整性 ==")
 // 翻译文件不是 SPM 资源，测试直接读仓库里的源文件。

@@ -113,20 +113,10 @@ extension L10n {
                 + "Motors on the same CAN bus should use different IDs, otherwise messages will collide. "
                 + "Changes only affect pending application config, still need to click \"Write to Motor\" in the top right."
         )
-        public static let canStatusLevel = L10nKey("config.can_status_level", "CAN Status Frame Level")
-        public static let canStatusLevelDescription = L10nKey(
-            "config.can_status_level_description",
-            "Determines which groups of status frames are periodically broadcast; levels are cumulative, factory default broadcasts only group 1"
-        )
-        public static let disable = L10nKey("config.disable", "Disable")
-        public static let canStatusLevelDisabledHelp = L10nKey(
-            "config.can_status_level_disabled_help",
-            "send_can_status = 0: do not broadcast status frames at all"
-        )
         public static let canStatusRate = L10nKey("config.can_status_rate", "CAN Status Frame Rate")
         public static let canStatusRateDescription = L10nKey(
             "config.can_status_rate_description",
-            "send_can_status_rate_hz; number of frames increases multiplicatively with level, pay attention to bus bandwidth"
+            "send_can_status_rate_hz; how often the motor broadcasts its periodic status frame. Must not be 0."
         )
         public static let hertzUnit = L10nKey("config.hertz_unit", "Hz")
         public static let canStatusRateHelp = L10nKey(
@@ -182,6 +172,20 @@ extension L10n {
         public static let applicationParams = L10nKey(
             "config.application_params", "Application configuration (appconf)")
 
+        /// 方向开关的真实情况——界面此前把它画成两个独立开关，是错的。
+        public static let directionSingleSwitchTitle = L10nKey(
+            "config.direction_single_switch_title",
+            "Direction (one switch, two names)")
+        public static let directionSingleSwitchBody = L10nKey(
+            "config.direction_single_switch_body",
+            "The firmware stores these as two fields but writes both from a single byte, and it never reads m_invert_direction back from the wire at all. They cannot be set independently: writing either one sets both. Five parameter backups from real motors confirm the two have never differed.")
+        public static let directionDoNotUse = L10nKey(
+            "config.direction_do_not_use",
+            "Do not use this to reverse your motor. It is the FOC commutation calibration — flipping it makes the motor stall and squeal. Reverse the sign in your own control code instead.")
+        public static let directionIncomplete = L10nKey(
+            "config.direction_incomplete",
+            "It also does not flip everything: speed, current, duty and tachometer follow this flag, but position is hard-coded and does not. A change here makes position disagree with everything else.")
+
         public static let all: [L10nKey] = [
             configNotLoaded, configLoadedDescription, commonAndDetection, commonParams, searchPlaceholder,
             pendingChanges, refreshConfig, writeToMotor,
@@ -195,9 +199,10 @@ extension L10n {
             detectingEncoder, detectEncoderMessage,
             motorReadValue, newDetectedValue, resultSeparator, resistanceUnit, inductanceUnit, fluxLinkageUnit,
             detectionFailed, encoderResultHint,
-            canID, canIDDescription, configNotLoaded2, canIDHelp, canStatusLevel, canStatusLevelDescription,
-            disable, canStatusLevelDisabledHelp, canStatusRate, canStatusRateDescription, hertzUnit, canStatusRateHelp,
+            canID, canIDDescription, configNotLoaded2, canIDHelp,
+            canStatusRate, canStatusRateDescription, hertzUnit, canStatusRateHelp,
             encoderCommutationDirection, encoderCommutationHelp, userControlDirection, userControlDirectionHelp,
+            directionSingleSwitchTitle, directionSingleSwitchBody, directionDoNotUse, directionIncomplete,
             reversed, forward, directionState,
             successMarker, signatureFormat, fieldSeparator, identificationFailed,
             applicationParams,
