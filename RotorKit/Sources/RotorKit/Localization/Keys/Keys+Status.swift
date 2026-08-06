@@ -2,6 +2,12 @@ import Foundation
 
 extension L10n {
     public enum Status {
+        public static let iapCannotOpenPort = L10nKey(
+            "status.iap_cannot_open_port",
+            "Cannot open the serial port \u{2014} is another program holding it? Disconnect in Rotor, or quit any other tool using the port.")
+        public static let iapFailedNextSteps = L10nKey(
+            "status.iap_failed_next_steps",
+            "Recovery failed. The link is left untouched. Next: cut the motor's MAIN power for 10 s, unplug the USB adapter, then power up and reconnect.")
         public static let ackButReadbackFailed = L10nKey("status.ack_but_readback_failed", "ACK received, but post-write readback failed")
         public static let backingUpFirmware = L10nKey("status.backing_up_firmware", "Reading and backing up firmware info and parameters…")
         public static let backupComplete = L10nKey("status.backup_complete", "Backup complete: %@")
@@ -110,7 +116,7 @@ extension L10n {
             finalCheckBackup, firmwareChecksumOk, firmwareExactMatch, firmwareNotSelected,
             firmwareRecoveryFailed, firmwareStartingServo, firmwareWaitStartup, fluxDetectionComplete,
             deviceStoppedResponding,
-            fluxDetectionFailed, forward, handshakingBaud, iapFailed,
+            fluxDetectionFailed, forward, handshakingBaud, iapFailed, iapFailedNextSteps, iapCannotOpenPort,
             iapJumpSequence, iapLostConnection, iapSuccess, invalidEncoderValues,
             invalidRlValues, localImageMatch, malforrmedResponseBytes, modeSwitchFailed,
             modeSwitchSent, modeSwitching, modeWrittenReconnecting, moreItems,

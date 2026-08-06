@@ -88,12 +88,62 @@ enum FirmwareCatalogError: LocalizedError {
     }
 }
 
+/// 放在固定目录里、由用户自己编译或打补丁产出的镜像。
+///
+/// **为什么要有这个而不是每次都弹文件选择器**：自制镜像会反复刷（改一版刷一版），
+/// 而它们躺在仓库深处（`reverse-engineering/fw-mod/released/`），每次现找现点是
+/// 一条纯粹的摩擦。更糟的是**选错文件不会立刻报错**——结构校验只看得出"不是个
+/// 合法镜像"，看不出"是另一台电机的镜像"。给一个固定目录 + 下拉，
+/// 就把"选哪个文件"从每次的判断变成一次性的整理。
+struct SelfCompiledImage: Identifiable, Hashable {
+    let url: URL
+    let byteCount: Int
+    let sha256: String
+
+    var id: String { url.path }
+    var name: String { url.lastPathComponent }
+    /// 下拉里显示的一行：文件名 + 大小 + SHA 前缀。**SHA 必须露出来** ——
+    /// 同名文件改了内容是最容易刷错的一种情况，文件名看不出区别，SHA 看得出。
+    var label: String { "\(name) · \(byteCount.formatted()) B · \(sha256.prefix(8))…" }
+}
+
 enum FirmwareCatalog {
     static let rootURL: URL = {
         let base = FileManager.default.urls(for: .applicationSupportDirectory,
                                              in: .userDomainMask).first!
         return base.appendingPathComponent("Rotor/OfficialFirmware", isDirectory: true)
     }()
+
+    /// 自制镜像目录。与官方目录**平级但分开**——刷错的代价是一次上机排查，
+    /// 两者混在一个目录里迟早出事。
+    static let selfCompiledURL: URL = {
+        let base = FileManager.default.urls(for: .applicationSupportDirectory,
+                                             in: .userDomainMask).first!
+        return base.appendingPathComponent("Rotor/SelfCompiledFirmware", isDirectory: true)
+    }()
+
+    /// 扫描自制镜像目录。目录不存在就地建出来（用户第一次点"在 Finder 中打开"
+    /// 时应该看到一个空目录，而不是一个报错）。
+    ///
+    /// 只认 `.bin`，按文件名排序（不按修改时间——那会让列表顺序随刷写行为漂移，
+    /// 而人是靠位置记东西的）。读不出内容的文件**跳过但不静默**：这类文件会以
+    /// 长度 0 出现在列表里，选中时结构校验必然拒绝，比装作没看见好。
+    static func scanSelfCompiled() -> [SelfCompiledImage] {
+        let fm = FileManager.default
+        if !fm.fileExists(atPath: selfCompiledURL.path) {
+            try? fm.createDirectory(at: selfCompiledURL, withIntermediateDirectories: true)
+        }
+        let urls = (try? fm.contentsOfDirectory(at: selfCompiledURL,
+                                                includingPropertiesForKeys: nil)) ?? []
+        return urls
+            .filter { $0.pathExtension.lowercased() == "bin" }
+            .sorted { $0.lastPathComponent < $1.lastPathComponent }
+            .map { url in
+                let data = (try? Data(contentsOf: url)) ?? Data()
+                return SelfCompiledImage(url: url, byteCount: data.count,
+                                         sha256: sha256(data))
+            }
+    }
 
     // 每个记录同时固定“官方归档 SHA-256”和“最终镜像 SHA-256”。官网若在相同 URL
     // 替换文件，应用会停止而不是盲目接受。V3 镜像是官方 Qt 资源中的原始数据段。

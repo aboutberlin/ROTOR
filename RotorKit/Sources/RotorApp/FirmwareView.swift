@@ -10,6 +10,11 @@ struct FirmwareView: View {
     @EnvironmentObject var firmware: FirmwareModel
     @State private var pickedRecordID: String = FirmwareCatalog.records.first?.id ?? ""
 
+    // 自制镜像目录的内容。**不缓存成 static**——用户会在应用运行期间往目录里丢文件
+    // （刷完一版改一版是常态），缓存住就得重启才看得见。
+    @State private var selfCompiled: [SelfCompiledImage] = []
+    @State private var pickedSelfCompiledID: String = ""
+
     private enum StepState {
         case locked, active, done
     }
@@ -63,6 +68,31 @@ struct FirmwareView: View {
             } else {
                 Text(L10n.Firmware.notConnectedYet).foregroundStyle(.secondary)
             }
+
+            Divider()
+            recoveryRow
+        }
+    }
+
+    /// 救砖入口。**刻意放在第 1 步、常驻可见、不受后面步骤的门限制。**
+    ///
+    /// 需要它的时候，设备多半已经不在"正常连上"的状态了——把它锁在
+    /// "选好镜像 / 备份完 / 勾了风险"后面，等于它唯一有用的时刻恰好不可点。
+    private var recoveryRow: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 10) {
+                Button {
+                    firmware.recoverV3Application()
+                } label: {
+                    Label(L10n.t(L10n.Firmware.recoverToApp), systemImage: "lifepreserver")
+                }
+                .disabled(!firmware.canRecoverV3Application)
+                .help(L10n.t(L10n.Firmware.recoverToAppHelp))
+                Spacer()
+            }
+            Text(L10n.t(L10n.Firmware.recoverToAppHint))
+                .font(.caption).foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
 
@@ -107,6 +137,69 @@ struct FirmwareView: View {
                         }
                     }
                 }
+
+                Divider()
+
+                // ── 自制镜像：固定目录 + 下拉 ──
+                //
+                // 这里刻意**不是**只给一个文件选择器。自制镜像会反复刷（改一版刷一版），
+                // 而它们躺在仓库深处；每次现找现点是纯摩擦，更糟的是**选错文件不会
+                // 立刻报错**——结构校验看得出"不是合法镜像"，看不出"是另一台电机的镜像"。
+                // 固定目录 + 下拉把"选哪个文件"从每次的判断变成一次性的整理。
+                // 下拉里**必须显示 SHA 前缀**：同名文件改了内容是最容易刷错的一种情况，
+                // 文件名看不出区别，SHA 看得出。
+                VStack(alignment: .leading, spacing: 6) {
+                    HStack(spacing: 10) {
+                        Text(L10n.t(L10n.Firmware.selfCompiledCatalog))
+                            .font(.callout.weight(.medium))
+
+                        if selfCompiled.isEmpty {
+                            Text(L10n.t(L10n.Firmware.selfCompiledEmpty))
+                                .font(.caption).foregroundStyle(.secondary)
+                        } else {
+                            Picker("", selection: $pickedSelfCompiledID) {
+                                Text(L10n.t(L10n.Firmware.selfCompiledNone)).tag("")
+                                ForEach(selfCompiled) { image in
+                                    Text(image.label).tag(image.id)
+                                }
+                            }
+                            .labelsHidden()
+                            .frame(maxWidth: 460)
+
+                            Button(L10n.t(L10n.Firmware.select)) {
+                                if let image = selfCompiled.first(where: { $0.id == pickedSelfCompiledID }) {
+                                    firmware.selectCustomFirmware(image.url)
+                                }
+                            }
+                            .disabled(firmware.firmwareBusy || pickedSelfCompiledID.isEmpty)
+                        }
+
+                        Spacer()
+
+                        Button {
+                            // 目录不存在时 scan 会就地建出来——用户点开应当看到一个空目录，
+                            // 而不是一个报错。
+                            selfCompiled = FirmwareCatalog.scanSelfCompiled()
+                            NSWorkspace.shared.open(FirmwareCatalog.selfCompiledURL)
+                        } label: {
+                            Label(L10n.t(L10n.Firmware.revealSelfCompiled), systemImage: "folder.badge.gearshape")
+                        }
+                        .disabled(firmware.firmwareBusy)
+
+                        Button {
+                            selfCompiled = FirmwareCatalog.scanSelfCompiled()
+                        } label: {
+                            Image(systemName: "arrow.clockwise")
+                        }
+                        .help(L10n.t(L10n.Firmware.rescanSelfCompiled))
+                        .disabled(firmware.firmwareBusy)
+                    }
+
+                    Text(FirmwareCatalog.selfCompiledURL.path)
+                        .font(.caption2.monospaced()).foregroundStyle(.secondary)
+                        .textSelection(.enabled)
+                }
+                .onAppear { selfCompiled = FirmwareCatalog.scanSelfCompiled() }
 
                 Divider()
 
@@ -218,15 +311,22 @@ struct FirmwareView: View {
                        isOn: $firmware.firmwareRiskAcknowledged)
                     .disabled(firmware.firmwareBusy)
 
+                // ⛔ 这里曾经有一个「测试 IAP 回环（不擦除）」按钮。**已删除，别加回来。**
+                //
+                // 它的本意是"真刷之前先验一遍上传通道"，但工程上站不住：
+                //   · 测试通过 → 你还是要真刷一次，而真刷会再进一次 IAP ⇒ 没省掉任何风险
+                //   · 测试失败 → 设备停在 IAP/bootloader 状态回不来 ⇒ 比不点它更糟
+                // **一个预检如果失败会把你推到比没检查更坏的位置，它就不是安全措施。**
+                //
+                // 2026-08-06 真机上把一台 AK80-9 送进了这个状态：应用还在跑（电机按力矩
+                // 转动、CAN 命令收得到），但 CAN 状态线程与 UART 命令线程都不回话，
+                // 而进 bootloader 的命令是发给应用的 ⇒ 没有软件出路，只剩 SWD。
+                //
+                // 进 bootloader 的标志写在 RTC->BKP1R（VBAT 域），**扛得住普通复位**，
+                // 所以软复位 0x5E 也救不回来。
+                //
+                // 取代它的是下面那个常驻的「恢复到应用」按钮——救砖入口不能被步骤门锁住。
                 HStack(spacing: 10) {
-                    Button {
-                        firmware.testV3IAPRoundTrip()
-                    } label: {
-                        Label(L10n.t(L10n.Firmware.testIAPRoundTrip), systemImage: "arrow.triangle.2.circlepath")
-                    }
-                    .disabled(!firmware.canTestV3IAPRoundTrip)
-                    .help(L10n.Firmware.testIAPHelp)
-
                     Button {
                         firmware.startFirmwareUpgrade()
                     } label: {

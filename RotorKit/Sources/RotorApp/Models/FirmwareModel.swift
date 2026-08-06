@@ -50,10 +50,18 @@ final class FirmwareModel: ObservableObject {
         return false
     }
 
-    var canTestV3IAPRoundTrip: Bool {
-        connection?.connected == true && session.supports(.iapFirmwareUpload)
-            && connection?.firmwareMode == .servo
-            && !firmwareBusy && firmwareRiskAcknowledged
+    /// 「恢复到应用」的可用条件。**刻意比别的操作宽松**：
+    ///
+    /// 需要救砖的时候，设备多半已经不在"正常连上、握手过、模式认出来"的状态了。
+    /// 把救砖按钮锁在那些前提后面，等于**它唯一有用的时刻恰好是它不可点的时刻**。
+    /// 所以这里只要求"串口开着且当前没在忙"——够发那两轮 A1 就行。
+    /// 也不要求勾选风险确认：这个操作不擦除、不写固件，只发跳转序列。
+    var canRecoverV3Application: Bool {
+        // ⛔ **不要**写成 `session.client != nil`。我第一版就是那么写的，而 client
+        // 只有握手成功才存在——于是"设备不应答"这个唯一需要救砖的场景里，
+        // 救砖按钮恰好是灰的。真机上被这条卡过一次。
+        // 只要选了口、当前不忙就该可点：那两轮 A1 挂在 transport 上，不需要 client。
+        !(connection?.selectedPort.isEmpty ?? true) && !firmwareBusy
     }
 
     /// 固件目录按协议分支索引，所以这里读协议是取索引键，不是按世代分支行为。
@@ -266,24 +274,44 @@ final class FirmwareModel: ObservableObject {
         }
     }
 
-    /// 只验证 IAP → APP 返回路径，不发送擦除或固件数据。
-    /// 用于升级前确认适配器、线路状态和两轮跳转序列均可用。
-    func testV3IAPRoundTrip() {
-        guard canTestV3IAPRoundTrip else { return }
+    /// 把设备从 IAP/bootloader 状态踢回应用。**不擦除、不写固件**，只发官方那两轮 A1。
+    ///
+    /// 这个方法原来叫 `testV3IAPRoundTrip`，挂在一个「测试 IAP 回环（不擦除）」按钮上。
+    /// 那个按钮已删除，因为它在工程上站不住：测试通过你还是要真刷一次（真刷会再进一次
+    /// IAP），测试失败设备却停在回不来的状态——**一个预检如果失败会把你推到比没检查
+    /// 更坏的位置，它就不是安全措施。** 同一段代码留下来做**恢复**是对的，做**预检**是错的。
+    func recoverV3Application() {
+        guard canRecoverV3Application else { return }
         firmwareBusy = true
         firmwareProgress = 0
         firmwareOperationStatus = L10n.t(L10n.Status.enteringIap)
         telemetry?.stopPolling()
 
+        let port = connection?.selectedPort ?? ""
+        let preferredBaud = connection?.baud ?? 921600
+
         session.io.async {
             self.control?.stopControlOnIO(sendStop: true)
-            guard let client = self.session.client else {
-                DispatchQueue.main.async {
-                    self.firmwareBusy = false
-                    self.firmwareOperationStatus = L10n.t(L10n.Status.iapLostConnection)
+
+            // 没有活着的 client 也要能救——这正是需要救砖的那种局面。
+            // 两轮 A1 挂在 transport 上，只要串口开得起来就能发。
+            let client: Client
+            let openedHere: Bool
+            if let existing = self.session.client {
+                client = existing
+                openedHere = false
+            } else {
+                guard let t = SerialTransport(port: port, baud: preferredBaud) else {
+                    DispatchQueue.main.async {
+                        self.firmwareBusy = false
+                        self.firmwareOperationStatus = L10n.t(L10n.Status.iapCannotOpenPort)
+                    }
+                    return
                 }
-                return
+                client = Client(t)
+                openedHere = true
             }
+            defer { if openedHere { client.close() } }
 
             let recovered = client.recoverV3ServoApplication { round in
                 DispatchQueue.main.async {
@@ -301,14 +329,20 @@ final class FirmwareModel: ObservableObject {
                     self.telemetry?.startPolling()
                 }
             } else {
-                _ = client.prepareForBootloaderTimeout()
-                client.close()
-                self.session.client = nil
+                // ⛔ 这里原来调 `prepareForBootloaderTimeout()` 然后 close + 断开。
+                // 那个调用把线路设成 **1200 7N1 + RTS/DTR 拉住** —— 正是**进 bootloader
+                // 的门**。也就是说：恢复失败之后，代码反而把设备**朝 bootloader 又推了
+                // 一步**，然后断线走人，用户什么都做不了。
+                //
+                // 2026-08-06 真机上就是这么卡住一台 AK80-9 的：应用还在跑（电机按力矩
+                // 转动、CAN 命令收得到），但 UART 不回话，而进 bootloader 的命令是发给
+                // 应用的 ⇒ 界面上再没有任何出路。
+                //
+                // 现在失败就是失败：**保持连接不动**，把下一步告诉用户。
                 DispatchQueue.main.async {
-                    self.connection?.markLinkLost()
                     self.firmwareBusy = false
                     self.firmwareProgress = 0
-                    self.firmwareOperationStatus = L10n.t(L10n.Status.iapFailed)
+                    self.firmwareOperationStatus = L10n.t(L10n.Status.iapFailedNextSteps)
                 }
             }
         }

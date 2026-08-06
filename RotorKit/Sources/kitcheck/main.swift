@@ -722,6 +722,71 @@ if let probeIndex = CommandLine.arguments.firstIndex(of: "--probe"),
         exit(0)
     }
 
+    // 按位改一个 appconf 字段。**刻意做成按位而不是写整值**：像 0x2A 开关那样的
+    // 位藏在一个 16 位字段里（`app_balance_conf.hertz`，线上 204），而**其余 15 位的
+    // 语义我们只查清了一个**。按位做成读-改-写，"不碰别的位"就是结构保证，
+    // 不是调用者要记得的事。
+    //
+    // 例：关掉 0x2A 多圈位置帧（bit15）
+    //   --appconf-set-bit app_balance_conf.hertz 15 0
+    if let i = CommandLine.arguments.firstIndex(of: "--appconf-set-bit"),
+       CommandLine.arguments.indices.contains(i + 3) {
+        let field = CommandLine.arguments[i + 1]
+        guard let bit = Int(CommandLine.arguments[i + 2]), (0...31).contains(bit),
+              let want = Int(CommandLine.arguments[i + 3]), (0...1).contains(want) else {
+            print("  ❌ 用法：--appconf-set-bit <字段名> <位号 0..31> <0|1>")
+            exit(70)
+        }
+        guard let appCodec = client.appconfCodec else {
+            print("  ❌ 缺少 appconf 参数定义"); exit(71)
+        }
+        guard let (sig, config) = client.getAppconf() else {
+            print("  ❌ appconf 读取失败"); exit(72)
+        }
+        guard let current = config[field]?.intValue else {
+            let near = config.keys.filter { $0.localizedCaseInsensitiveContains(field) }.sorted()
+            print("  ❌ 没有字段 \"\(field)\"" + (near.isEmpty ? "" : "；相近的：\(near.prefix(5))"))
+            exit(73)
+        }
+        let mask = 1 << bit
+        let updatedValue = want == 1 ? (current | mask) : (current & ~mask)
+        print("  ℹ️ \(field) = \(current) (0x\(String(format: "%X", current)))"
+              + " → \(updatedValue) (0x\(String(format: "%X", updatedValue)))"
+              + "   只动 bit\(bit)")
+        if updatedValue == current {
+            print("  ✅ 该位已经是 \(want)，不做任何写入"); exit(0)
+        }
+
+        // 写之前先落一份备份。ACK 只代表"收到"，不代表"生效"——本项目的规矩。
+        let backupDir = URL(fileURLWithPath: "../../hardware-debug", isDirectory: true)
+        try? FileManager.default.createDirectory(at: backupDir, withIntermediateDirectories: true)
+        let stamp = DateFormatter(); stamp.dateFormat = "yyyyMMdd-HHmmss"
+        let backupURL = backupDir.appendingPathComponent(
+            "ak80-9-appconf-before-bit-\(stamp.string(from: Date())).bin")
+        do { try Data(appCodec.pack(config, signature: sig)).write(to: backupURL, options: .atomic) }
+        catch { print("  ❌ 无法保存备份：\(error)"); exit(74) }
+
+        var updated = config
+        updated[field] = .int(updatedValue)
+        guard client.setAppconf(updated, signature: sig) else {
+            print("  ❌ 写入未收到 ACK；备份：\(backupURL.path)"); exit(75)
+        }
+        usleep(250_000)
+        guard let (vsig, verified) = client.getAppconf() else {
+            print("  ❌ 收到 ACK 但写后读不回来；备份：\(backupURL.path)"); exit(76)
+        }
+        let exact = vsig == sig
+            && appCodec.pack(verified, signature: vsig) == appCodec.pack(updated, signature: sig)
+        let after = verified[field]?.intValue ?? -1
+        if exact {
+            print("  ✅ \(field) = \(after) (0x\(String(format: "%X", after)))")
+            print("  ✅ ACK 后回读**逐字节一致**；写前备份：\(backupURL.path)")
+            exit(0)
+        }
+        print("  ❌ 收到 ACK 但回读不一致：\(field)=\(after)；备份：\(backupURL.path)")
+        exit(77)
+    }
+
     if let termIndex = CommandLine.arguments.firstIndex(of: "--terminal") {
         guard CommandLine.arguments.indices.contains(termIndex + 1) else {
             print("  ❌ 用法：--terminal \"<命令>\"    例：--terminal hw_status")

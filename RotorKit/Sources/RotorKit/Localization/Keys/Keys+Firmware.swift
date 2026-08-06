@@ -2,6 +2,13 @@ import Foundation
 
 extension L10n {
     public enum Firmware {
+        public static let recoverToApp = L10nKey("firmware.recover_to_app", "Recover to application")
+        public static let recoverToAppHelp = L10nKey(
+            "firmware.recover_to_app_help",
+            "Sends the official two-round A1 IAP→Servo jump. Does not erase and does not write firmware.")
+        public static let recoverToAppHint = L10nKey(
+            "firmware.recover_to_app_hint",
+            "If the motor spins but never answers: cut the motor's MAIN power for 10 s (a soft reset is not enough \u{2014} the bootloader flag lives in the RTC backup domain), unplug the USB adapter, then power up and reconnect.")
         // MARK: 步骤 1 - 连接
         public static let step1Title = L10nKey("firmware.step_1_title", "Connect Motor")
         public static let step1Hint = L10nKey(
@@ -30,6 +37,13 @@ extension L10n {
             "File must match the complete SHA-256 of an official image in the catalog above"
         )
         public static let customCompiledImage = L10nKey("firmware.custom_compiled_image", "Self-compiled image…")
+        public static let selfCompiledCatalog = L10nKey("firmware.self_compiled_catalog", "Self-compiled")
+        public static let selfCompiledNone = L10nKey("firmware.self_compiled_none", "Not selected")
+        public static let selfCompiledEmpty = L10nKey(
+            "firmware.self_compiled_empty",
+            "No .bin in the folder yet — click \"Open folder\" and drop your images there")
+        public static let revealSelfCompiled = L10nKey("firmware.reveal_self_compiled", "Open folder")
+        public static let rescanSelfCompiled = L10nKey("firmware.rescan_self_compiled", "Rescan the folder")
         public static let customCompiledImageHelp = L10nKey(
             "firmware.custom_compiled_image_help",
             """
@@ -75,14 +89,6 @@ extension L10n {
             "firmware.power_off_warning",
             "I confirm motor is unloaded/fixed and power is stable; I will not power off or unplug during upgrade"
         )
-        public static let testIAPRoundTrip = L10nKey(
-            "firmware.test_iap_round_trip",
-            "Test IAP round-trip (no erase)"
-        )
-        public static let testIAPHelp = L10nKey(
-            "firmware.test_iap_help",
-            "Execute two A1 jump-to-app sequences after entering IAP; send no firmware data"
-        )
         public static let startUpgrade = L10nKey(
             "firmware.start_upgrade",
             "Begin upgrade and verify reconnection version"
@@ -111,11 +117,12 @@ extension L10n {
             step1Title, step1Hint, notConnected,
             step2Title, step2Hint, officialCatalog, verifyOK, select, downloadAndVerify,
             archiveOnly, localOfficialFile, localOfficialFileHelp,
-            customCompiledImage, customCompiledImageHelp,
+            customCompiledImage, selfCompiledCatalog, selfCompiledNone,
+            selfCompiledEmpty, revealSelfCompiled, rescanSelfCompiled, customCompiledImageHelp,
             pendingImage, customCompiled, customFirmwareAcknowledgment,
             step3Title, step3Hint, exportFirmwareAndBackup, showInFinder, backupComplete, backupNote,
             step4Title, step4Hint, powerOffWarning,
-            testIAPRoundTrip, testIAPHelp, startUpgrade,
+            recoverToApp, recoverToAppHelp, recoverToAppHint, startUpgrade,
             statusFailed, statusStopped, statusMismatch, statusPassed, statusComplete,
             selectCustomImageTitle, selectOfficialFileTitle,
             notConnectedYet, vectorTableSummary,

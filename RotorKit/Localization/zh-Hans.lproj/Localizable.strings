@@ -126,8 +126,6 @@
 "firmware.step_3_title" = "备份参数";
 "firmware.step_4_hint" = "升级期间请勿断电或拔线；失败会在无 ACK 时立即停止，不会无限重发";
 "firmware.step_4_title" = "确认并升级";
-"firmware.test_iap_help" = "进入 IAP 后执行两轮 A1 跳转应用序列；不发送任何固件数据";
-"firmware.test_iap_round_trip" = "测试 IAP 往返（不擦写）";
 "firmware.verify_ok" = "已校验";
 
 /* firmware_catalog */
@@ -362,3 +360,13 @@
 "config.direction_single_switch_body" = "固件把它存成两个字段，却用同一个字节写入两处，而且 m_invert_direction 从不从线上回读。两者无法独立设置：改任意一个，两个都变。五份真机参数备份确认它们从未不同过。";
 "config.direction_do_not_use" = "不要用它来反转电机方向。它是 FOC 换相标定值——翻转会导致堵转啸叫。请在你自己的控制代码里取反。";
 "config.direction_incomplete" = "它也不会翻转全部：转速、电流、占空比、里程计跟随此标志，而位置是写死的、不跟随。在这里改动会让位置与其余量互相矛盾。";
+"firmware.self_compiled_catalog" = "自制镜像";
+"firmware.self_compiled_none" = "未选择";
+"firmware.self_compiled_empty" = "目录里还没有 .bin —— 点「打开目录」把镜像放进去";
+"firmware.reveal_self_compiled" = "打开目录";
+"firmware.rescan_self_compiled" = "重新扫描目录";
+"firmware.recover_to_app" = "恢复到应用";
+"firmware.recover_to_app_help" = "发送官方那两轮 A1 的 IAP→Servo 跳转序列。不擦除、不写固件。";
+"firmware.recover_to_app_hint" = "如果电机会转但一直不回话：断掉电机**主电源** 10 秒（软复位不够——进 bootloader 的标志存在 RTC 备份域里），拔掉 USB 适配器，再上电重连。";
+"status.iap_failed_next_steps" = "恢复失败，连接**未被改动**。下一步：断掉电机主电源 10 秒，拔掉 USB 适配器，再上电重连。";
+"status.iap_cannot_open_port" = "串口打不开——是不是被别的程序占着？先在 Rotor 里断开，或退掉其它在用这个口的工具。";
